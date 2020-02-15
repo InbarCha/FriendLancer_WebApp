@@ -1,24 +1,26 @@
-<div class="jumbotron text-center" style="margin-bottom:0">
-  <h1>My First Bootstrap 4 Page</h1>
-  <p>Resize this responsive page to see the effect!</p>
-</div>
-
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-  <a class="navbar-brand" href="#">Navbar</a>
+<nav class="navbar navbar-expand-sm navbar-brown fixed-top">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
-    <ul class="navbar-nav">
+    <ul class="navbar-nav mx-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link">Link</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link">Link</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link">Link</a>
       </li>
     </ul>
   </div>
 </nav>
+
+<div class="jumbotron text-center" id="primary_jumbotron_display">
+  <div id="primaryDisplayBorder">
+    <div id="primaryDisplayContent">{{primaryDisplayBorderTitle}}</div>
+    <p>{{primaryDisplayBorderContent}}</p>
+  </div>
+</div>
+

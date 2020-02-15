@@ -23,19 +23,11 @@ app.use(express.static(path.join(__dirname, 'dist')));
  * In the routes.js file we will make a function that returns all routes for the entire application
  * We then call the function in the Routes variable, giving it the express app variable and __dirname
  */
-// We set the route of the templates and give it to expres
-app.set('views', `${__dirname}/server/views`);
-// Tell express's engine what file format we are targeting and what
-// library to use, in this case we use EJS and it;d renderfile engine
-app.engine('html', require('ejs').renderFile);
-// And lastly we set the 'view engine' to be HTML
-app.set('view engine', 'html');
-
 const Routes = require('./server/routes'); // Import all route endpoints
 Routes(app, __dirname);
 
 // Get port from environment and store in Express
-const port = 3000;
+const port = process.env.PORT || '3000';
 app.set('port', port);
 
 // CREATE HTTP SERVER

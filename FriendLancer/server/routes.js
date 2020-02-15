@@ -3,7 +3,7 @@ const path = require('path');
 
 /**
  * Sets up all the routes for the Express app.
- * @param {Express} app - contains a reference to the Express App in the app.js file in the root of the project
+ * @param {Express} app - contains a reference to the Express App in the server.js file in the root of the project
  * @param {__dirname} root -  contains an Object value pointing to the root of the project
  */
 module.exports = function routes(app, root) {
