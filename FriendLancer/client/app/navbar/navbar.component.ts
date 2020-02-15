@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -8,10 +8,20 @@ import { Component, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
   primaryDisplayBorderTitle = 'FriendLancer';
   primaryDisplayBorderContent = 'Collaboration Made Easy';
+  @Output() showHomePageEmitter = new EventEmitter<boolean>();
+  @Output() showForumsEmitter = new EventEmitter<boolean>();
+  @Output() showMyZoneEmitter = new EventEmitter<boolean>();
   constructor() { }
 
   ngOnInit(): void {
-
   }
-
+  clickedMyZone() {
+    this.showMyZoneEmitter.emit();
+  }
+  clickedHome() {
+    this.showHomePageEmitter.emit();
+  }
+  clickedForums() {
+    this.showForumsEmitter.emit();
+  }
 }
