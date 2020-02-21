@@ -6,6 +6,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ForumsComponent } from './forums/forums.component';
 import { MyZoneComponent } from './my-zone/my-zone.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HomePageComponent } from './home-page/home-page.component';
     HomePageComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RouterModule.forRoot([])
   ],
   providers: [],
   bootstrap: [AppComponent]

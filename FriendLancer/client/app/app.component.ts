@@ -10,6 +10,8 @@ export class AppComponent implements OnInit  {
   showHome: boolean;
   showForums: boolean;
   showMyZone: boolean;
+  constructor() {
+  }
   ngOnInit(): void {
     this.showHome = true;
     this.showForums = false;

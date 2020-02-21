@@ -10,7 +10,7 @@ module.exports = function routes(app, root) {
   // Any new endpoints you create you will want to add them here
   // Example route: app.route('urlpath', RouteJsFile);
   // app.route('/api/users', require('./api/users'));
-
+  app.use('/api/users', require('./api/users'));
   /**
    * Here we can handle all error routes and point them to a component in the components folder
    * as well as a view for that component. In this case, we are handling anything that does not have a route
