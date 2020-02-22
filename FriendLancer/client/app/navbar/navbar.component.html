@@ -19,8 +19,14 @@
       <li class="nav-item" *ngIf="!auth.isLoggedIn()">
         <a class="nav-link" routerLink="/login" >Log In</a>
       </li>
+      <li class="nav-item" *ngIf="!auth.isLoggedIn()">
+        <a class="nav-link" routerLink="/register" >Register</a>
+      </li>
       <li class="nav-item" *ngIf="auth.isLoggedIn()">
         <a class="nav-link" (click)="auth.logout()">Log Out</a>
+      </li>
+      <li *ngIf="auth.isLoggedIn()">
+        Welcome, {{auth.getUserEmail()}}
       </li>
     </ul>
   </div>

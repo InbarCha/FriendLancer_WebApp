@@ -11,6 +11,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PostsComponent } from './posts/posts.component';
+import { RegisterPageComponent } from './pages/register-page/register-page.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { PostsComponent } from './posts/posts.component';
     MyZoneComponent,
     HomePageComponent,
     LoginPageComponent,
-    PostsComponent
+    PostsComponent,
+    RegisterPageComponent
   ],
   imports: [
     BrowserModule,

@@ -6,17 +6,7 @@ const Schema = mongoose.Schema; // Mongoose model is a Schema
 // User Model Definition below
 const UserSchema = new Schema({
   name: String,
-  email: {
-    type: String,
-    lowercase: true,
-    // This field is required
-    required: [true, 'can\'t be blank'],
-    // This is a regular expresion we run on the email to ensure it is in the format
-    // username@domainname.extension
-    match: [/\S+@\S+\.\S+/, 'is invalid'],
-    // Index tru tells MongoDB that we can query by this field as an index reference
-    index: true
-  },
+  email: String,
   phone: String,
   password: {
     type: String,

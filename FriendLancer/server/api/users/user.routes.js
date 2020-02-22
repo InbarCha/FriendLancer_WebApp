@@ -18,6 +18,7 @@ router.get('/', controller.listAllUsers);
  * function: create() in the users.controller.js file
  */
 router.post('/', controller.create);
+
 /**
  * path: /api/users/:id     ->   example: http://localhost:3000/api/users/xavidram@sample.com
  * method: GET

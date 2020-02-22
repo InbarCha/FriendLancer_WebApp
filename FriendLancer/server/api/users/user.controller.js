@@ -37,41 +37,56 @@ function listAllUsers(req, res) {
 /**
  * Find a user by a specific email, we will send a request to this function in a GET request
  * saving the email in the request.param.id field
- * @param {Express.Request} req - Express request object contaning the User email we are searching for
- * @param {Express.Response} res - Express response object
- * @param {Express.Next} next - function when called goes back to request origin and tries to find another route.
  */
-function findUserByEmail(req, res, next) {
-  User.find({
-    email: req.params.id
-  }, (err, usr) => { // handle errors or user
-    if (err) { // if user doesnt exist, error will be defined
-      res.send(err); // return error to user
+function findUserByEmail(req, res) {
+  console.log('req.params.id: ' + req.params.id);
+  // Find user by email
+  User.findOne({
+    email: req.body.email
+  }).then(user => {
+    // Once we find the user, now let's pass the password from req.body to authenticate
+    if (!user) {
+      // Return false, user not even registered, but let's not tell them.
+      res.send({
+        message: false
+      });
     }
-    res.json(usr); // otherwise lets return the user
-  }).catch(err => next(err)); // any other errors not related to not finding the object, catch them
+    else {
+      res.json(user);
+    }
+  }).catch(validationError(res));
 }
 
 /**
  * Create a user and save it to the DB. We will send the user details in a POST request in the body of the post.
- * @param {Express.Request} req - Express Request object with the Request.body contaning the data
- * @param {*} res  - Express Response object
  */
 function create(req, res) {
-  // Define the new user, give the constructor the req.body containing all fields
-  let newUser = new User(req.body);
-  // if role not defined, lets give it a default user role, although our model should handle this
-  newUser.role = 'user';
-  // Now lets save the user
-  return newUser.save().then(function(user) { // then when the user saves
-    // We will be returning only a few fields that we should need.
-    res.json({
-      name: user.name,
-      _id: user._id,
-      role: user.role
-    }); // let's return the user entry to the person
-    // NOTE: We are not currently encrypting the user password, this is bad.
-  }).catch(validationError(res)); // catch any errors
+    var query = req.body.email;
+    console.log(query);
+    User.findOne({"email": query}, function(err, user) {
+      if (err) {
+        console.log(err);
+      }
+      else if (user) {
+        res.json({ message: false});
+      }
+      else {
+        // Define the new user, give the constructor the req.body containing all fields
+        let newUser = new User(req.body);
+        // if role not defined, lets give it a default user role, although our model should handle this
+        newUser.role = 'user';
+        // Now lets save the user
+        return newUser.save().then(function (user) { // then when the user saves
+          // We will be returning only a few fields that we should need.
+          res.json({
+            name: user.name,
+            _id: user._id,
+            role: user.role
+          }); // let's return the user entry to the person
+          // NOTE: We are not currently encrypting the user password, this is bad.
+        }).catch(validationError(res)); // catch any errors
+      }
+    });
 }
 
 function login(req, res) {
