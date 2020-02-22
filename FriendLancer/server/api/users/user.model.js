@@ -154,7 +154,36 @@ UserSchema.methods = {
         return callback(null, key.toString('base64'));
       }
     });
-  }
+  },
+
+  /**
+   * Authenticate - check if the passwords are the same
+   *
+   * @param {String} password
+   * @param {Function} callback
+   * @return {Boolean}
+   * @api public
+   */
+  authenticate(password, callback) {
+    if (!callback) {
+      return this.password === this.encryptPassword(password);
+    }
+
+    // We encrypt the password passed to login function by user trying to log in
+    this.encryptPassword(password, (err, pwdGen) => {
+      if (err) {
+        return callback(err);
+      }
+      // if it matches with the password of the user found by email
+      if (this.password === pwdGen) {
+        // return boolean true
+        return callback(null, true);
+      } else {
+        // otherwise return boolean false
+        return callback(null, false);
+      }
+    });
+  },
 }
 
 /**

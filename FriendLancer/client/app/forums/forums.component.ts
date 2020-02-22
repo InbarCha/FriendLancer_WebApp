@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-forums',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./forums.component.css']
 })
 export class ForumsComponent implements OnInit {
-  constructor() { }
+  constructor(public auth: AuthService) { }
   ngOnInit(): void {
   }
 

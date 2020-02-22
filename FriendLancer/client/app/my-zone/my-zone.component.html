@@ -1,1 +1,6 @@
-<p>my-zone works!</p>
+<div *ngIf="auth.isLoggedIn()">
+  <p>my-zone works!</p>
+</div>
+<div *ngIf="!auth.isLoggedIn()">
+  <p>not logged in!</p>
+</div>

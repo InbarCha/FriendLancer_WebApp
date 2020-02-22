@@ -1,16 +1,13 @@
 'use strict';
 const User = require('./user.model');
-
+const jwt = require('jsonwebtoken');
+const config = require('../../config');
 /**
  * Handles validation errors and returns the error to the user.
  * @param {Express.Response} res - an Express Response object
  * @param {number} statusCode - the result status code number
  */
 function validationError(res, statusCode) {
-  statusCode = statusCode || 422;
-  return function (err) {
-    return res.status(statusCode).json(err);
-  };
 }
 
 /**
@@ -19,10 +16,6 @@ function validationError(res, statusCode) {
  * @param {number} statusCode -  the result status code number
  */
 function handleError(res, statusCode) {
-  statusCode = statusCode || 500;
-  return function (err) {
-    return res.status(statusCode).send(err);
-  };
 }
 
 /**
@@ -81,5 +74,49 @@ function create(req, res) {
   }).catch(validationError(res)); // catch any errors
 }
 
+function login(req, res) {
+  // Find user by email
+  User.findOne({
+    email: req.body.email
+  }).then(user => {
+    // Once we find the user, now let's pass the password from req.body to authenticate
+    if (!user) {
+      // Return false, user not even registered, but let's not tell them.
+      res.send({
+        message: false
+      });
+    }
+    else {
+      user.authenticate(req.body.password, function (authErr, authenticated) {
+        if (authErr) {
+          res.send(authErr);
+        }
+        if (!authenticated) {
+          // Return false, password invalid
+          res.send({
+            message: false
+          });
+        } else {
+          // User is authenticated, let's created a webtoken
+          const token = jwt.sign({
+            _id: user._id
+          }, config.secrets.session, {
+            expiresIn: 60 * 60 * 5 // set expire time for token
+          });
+          // Let's return the created JSON Web token with some fields from the user Model
+          // we can use these fields to populate in the application who this logged in user is.
+          res.json({
+            token: token,
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            role: user.role
+          });
+        }
+      });
+    }
+  }).catch(validationError(res));
+}
+
 // Any functions we create, we want to return these functions to the express app to use.
-module.exports = { listAllUsers, findUserByEmail, create};
+module.exports = { listAllUsers, findUserByEmail, create, login};

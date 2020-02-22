@@ -1,9 +1,6 @@
-[(clickedMyZone)]="showMyZone"
 <html>
   <body>
     <app-navbar (showForumsEmitter)="showForumsPage()" (showMyZoneEmitter)="showMyZonePage()" (showHomePageEmitter)="showHomePage()"></app-navbar>
-    <app-home-page *ngIf="showHome"></app-home-page>
-    <app-forums *ngIf="showForums"></app-forums>
-    <app-my-zone *ngIf="showMyZone"></app-my-zone>
+    <router-outlet></router-outlet>
   </body>
 </html>

@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-navbar',
@@ -11,17 +12,8 @@ export class NavbarComponent implements OnInit {
   @Output() showHomePageEmitter = new EventEmitter<boolean>();
   @Output() showForumsEmitter = new EventEmitter<boolean>();
   @Output() showMyZoneEmitter = new EventEmitter<boolean>();
-  constructor() { }
+  constructor(public auth: AuthService) { }
 
   ngOnInit(): void {
-  }
-  clickedMyZone() {
-    this.showMyZoneEmitter.emit();
-  }
-  clickedHome() {
-    this.showHomePageEmitter.emit();
-  }
-  clickedForums() {
-    this.showForumsEmitter.emit();
   }
 }

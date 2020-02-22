@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../services/auth.service";
 
 @Component({
-  selector: 'app-my-zone',
-  templateUrl: './my-zone.component.html',
-  styleUrls: ['./my-zone.component.css']
+  selector: 'app-posts',
+  templateUrl: './posts.component.html',
+  styleUrls: ['./posts.component.css']
 })
-export class MyZoneComponent implements OnInit {
+export class PostsComponent implements OnInit {
+
   constructor(public auth: AuthService) { }
 
   ngOnInit(): void {
