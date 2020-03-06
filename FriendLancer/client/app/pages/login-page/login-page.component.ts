@@ -8,6 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent implements OnInit {
+  errorMessage: string = "";
   credentials: any = {
     email: '',
     pwd: ''
@@ -25,6 +26,7 @@ export class LoginPageComponent implements OnInit {
         // if invalid login, reset the form
         this.credentials.email = '';
         this.credentials.pwd = '';
+        this.errorMessage = "User or Password are Incorrect!";
       } else {
         // if we get here, there is no error, the return is valid
         // Let's first save the info into local storage for later use. We can parse this back

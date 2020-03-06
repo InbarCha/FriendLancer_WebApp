@@ -52,7 +52,12 @@ function findUserByEmail(req, res) {
       });
     }
     else {
-      res.json(user);
+      res.json({
+        name: user.name,
+        id: user._id,
+        email: user.email,
+        role: user.role
+      });
     }
   }).catch(validationError(res));
 }
