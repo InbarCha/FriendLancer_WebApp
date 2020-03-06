@@ -12,6 +12,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PostsComponent } from './posts/posts.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
     HomePageComponent,
     LoginPageComponent,
     PostsComponent,
-    RegisterPageComponent
+    RegisterPageComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,

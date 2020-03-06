@@ -12,7 +12,9 @@ export class RegisterPageComponent implements OnInit {
   credentials: any = {
     email: '',
     pwd: '',
-    fullName: ''
+    fullName: '',
+    city: '',
+    profession: '',
   }
   returnURL: string;
   constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute) { }
@@ -21,7 +23,7 @@ export class RegisterPageComponent implements OnInit {
     this.returnURL = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
   register() {
-    if (this.credentials.fullName === "" || this.credentials.email === "" || this.credentials.pwd === "") {
+    if (this.credentials.fullName === "" || this.credentials.email === "" || this.credentials.pwd === "" || this.credentials.profession ==="" || this.credentials.city === "") {
       this.initCredentialsToNull();
       this.errorMessage = "One Field or More is Empty!";
     }
@@ -30,7 +32,7 @@ export class RegisterPageComponent implements OnInit {
       this.errorMessage = "Invalid Email";
     }
     else {
-      this.auth.register(this.credentials.email, this.credentials.pwd, this.credentials.fullName).subscribe(data => {
+      this.auth.register(this.credentials.email, this.credentials.pwd, this.credentials.fullName, this.credentials.city, this.credentials.profession).subscribe(data => {
         if (data['message'] === false) {
           // if invalid login, reset the form
           this.initCredentialsToNull();
@@ -52,5 +54,7 @@ export class RegisterPageComponent implements OnInit {
     this.credentials.email = '';
     this.credentials.pwd = '';
     this.credentials.fullName = '';
+    this.credentials.city = '';
+    this.credentials.profession = '';
   }
 }

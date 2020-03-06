@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
+class Users {
+  fullName: string;
+  email: string;
+  city: string;
+  profession: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,11 +20,13 @@ export class AuthService {
       password: pwd
     });
   }
-  register(email:string, pwd:string, fullName:string) {
+  register(email:string, pwd:string, fullName:string, city:string, profession:string) {
     return this.http.post('http://localhost:3000/api/users', {
       email: email,
       password: pwd,
-      fullName: fullName
+      fullName: fullName,
+      city:city,
+      profession: profession
     });
   }
   isLoggedIn() {
@@ -37,6 +46,10 @@ export class AuthService {
     } else {
       return '';
     }
+  }
+
+  getAllUsers() {
+    return this.http.get<Users[]>('http://localhost:3000/api/users');
   }
 }
 

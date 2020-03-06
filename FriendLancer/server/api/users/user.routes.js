@@ -7,7 +7,7 @@ const controller = require('./user.controller');
 const router = express.Router();
 
 /**
- * path: /api/user
+ * path: /api/users
  * method: GET
  * function: listAllUsers() in the users.controller.js file
  */
