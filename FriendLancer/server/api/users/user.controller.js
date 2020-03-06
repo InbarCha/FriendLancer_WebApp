@@ -81,7 +81,8 @@ function create(req, res) {
           res.json({
             name: user.name,
             _id: user._id,
-            role: user.role
+            role: user.role,
+            email: user.email
           }); // let's return the user entry to the person
           // NOTE: We are not currently encrypting the user password, this is bad.
         }).catch(validationError(res)); // catch any errors
