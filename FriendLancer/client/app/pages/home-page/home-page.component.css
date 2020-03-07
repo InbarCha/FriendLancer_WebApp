@@ -1,0 +1,33 @@
+canvas { background-color: #cccccc;}
+
+h3 {text-shadow: 0 0 3px blue; }
+
+
+.newspaper {
+  column-count: 3;
+  column-gap: 40px;
+  column-rule: 1px solid lightblue;
+}
+
+h2 { column-span: all;}
+
+
+.transition
+{
+  width: 100px;
+  height: 180px;
+  background: #cccccc;
+  border-radius: 10px 30px;
+  transition: width 2s;
+}
+
+div:hover {
+  width: 1500px;
+  font-family: Bitstream Vera Serif Bold;
+}
+
+@font-face {
+  font-family: Bitstream Vera Serif Bold;
+  src: url('https://mdn.mozillademos.org/files/2468/VeraSeBd.ttf');
+  font-weight: bold;
+}
