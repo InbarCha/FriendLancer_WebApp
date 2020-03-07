@@ -26,9 +26,17 @@
   font-size: 7ex;
 }
 
+#navbarDiv{
+  -webkit-box-shadow: 0 2px 4px -1px rgba(0,0,0,0.25);
+  -moz-box-shadow: 0 2px 4px -1px rgba(0,0,0,0.25);
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,0.25);
+}
+
 .navbar-brown {
   background-color: saddlebrown !important;
-  box-shadow: #222222;
+  -webkit-box-shadow: 0 8px 6px -6px black;
+  -moz-box-shadow: 0 8px 6px -6px black;
+  box-shadow: 0 8px 6px -6px black;
 }
 
 .navbar {

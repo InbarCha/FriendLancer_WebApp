@@ -13,6 +13,7 @@ module.exports = function routes(app, root) {
   app.use('/api/users', require('./api/users'));
   app.use('/api/forums', require('./api/forums'));
   app.use('/api/posts', require('./api/posts'));
+  app.use('/api/meetPlaces', require('./api/meetPlaces'));
   /**
    * Here we can handle all error routes and point them to a component in the components folder
    * as well as a view for that component. In this case, we are handling anything that does not have a route

@@ -18,6 +18,9 @@ import { ForumsCreateComponent } from './forums/forums-create/forums-create.comp
 import { ForumsUpdateComponent } from './forums/forums-update/forums-update.component';
 import { PostsCreateComponent } from './posts/posts-create/posts-create.component';
 import { PostsUpdateComponent } from './posts/posts-update/posts-update.component';
+import { MeetPlaceComponent } from './meet-place/meet-place.component';
+import { MeetPlaceCreateComponent } from './meet-place/meet-place-create/meet-place-create.component';
+import { MeetPlaceUpdateComponent } from './meet-place/meet-place-update/meet-place-update.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,10 @@ import { PostsUpdateComponent } from './posts/posts-update/posts-update.componen
     ForumsCreateComponent,
     ForumsUpdateComponent,
     PostsCreateComponent,
-    PostsUpdateComponent
+    PostsUpdateComponent,
+    MeetPlaceComponent,
+    MeetPlaceCreateComponent,
+    MeetPlaceUpdateComponent
   ],
   imports: [
     BrowserModule,

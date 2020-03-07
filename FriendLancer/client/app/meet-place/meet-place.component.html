@@ -1,0 +1,28 @@
+<div class="myTable rounded-lg"  [ngStyle]="{textAlign: 'center'}" *ngIf="auth.isLoggedIn()">
+  <button class="btn btn-primary" id="createMeetPlaceBtn" routerLink="/meetPlaces/create"> New Meet Place </button>
+  <br/><br/>
+  <table class="table table-hover shadow-lg rounded-lg" id="myMeetPlacesTable">
+    <thead class="thead-dark">
+    <tr>
+      <th class="width-sm">
+        Meet Place Mame
+      </th>
+      <th class="width-sm">
+        Meet Place Type
+      </th>
+      <th class="width-sm">
+        Meet Place Location
+      </th>
+      <th class="width-sm">
+        Actions
+      </th>
+    </tr>
+    </thead>
+    <tbody id="myTableForumsD">
+    </tbody>
+  </table>
+</div>
+<div *ngIf="!auth.isLoggedIn()">
+  <br/>
+  <div class="display-4" [ngStyle]="{color:'red', textAlign:'center'}"> Not Logged In! </div>
+</div>

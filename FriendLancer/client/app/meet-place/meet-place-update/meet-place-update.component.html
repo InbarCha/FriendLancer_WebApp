@@ -1,0 +1,26 @@
+<div class="form-container" *ngIf="auth.isLoggedIn()">
+  <form name="form" class="loginForm" (ngSubmit)="f.form.valid && EditMeetPlace()" #f="ngForm" novalidate>
+    <div class="form-group">
+      <h2>Edit Meet Place</h2>
+    </div>
+    <div class="form-group">
+      <label>Meet Place Name</label>
+      <input class="form-control" type="text" name="meetPlaceName" [(ngModel)]="meetPlace.meetPlaceName" required disabled>
+    </div>
+    <div class="form-group">
+      <label>Meet Place Type</label>
+      <input class="form-control" type="text" name="meetPlaceType" [(ngModel)]="meetPlace.meetPlaceType" required>
+    </div>
+    <div class="form-group">
+      <label>Meet Place Location</label>
+      <input class="form-control" type="text" name="meetPlaceLocation" [(ngModel)]="meetPlace.meetPlaceLocation" required>
+    </div>
+    <br/>
+    <button class="btn login" type="submit">Submit</button> <br/>
+    <button class="btn login" routerLink="/meetPlaces">Cancel</button>
+  </form>
+</div>
+<div *ngIf="!auth.isLoggedIn()">
+  <br/>
+  <div class="display-4" [ngStyle]="{color:'red', textAlign:'center'}"> Not Logged In! </div>
+</div>
