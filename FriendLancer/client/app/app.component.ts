@@ -17,19 +17,4 @@ export class AppComponent implements OnInit  {
     this.showForums = false;
     this.showMyZone = false;
   }
-  showForumsPage() {
-    this.showHome = false;
-    this.showForums = true;
-    this.showMyZone = false;
-  }
-  showHomePage() {
-    this.showHome = true;
-    this.showForums = false;
-    this.showMyZone = false;
-  }
-  showMyZonePage() {
-    this.showHome = false;
-    this.showForums = false;
-    this.showMyZone = true;
-  }
 }

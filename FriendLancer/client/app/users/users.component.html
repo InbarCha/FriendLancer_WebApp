@@ -1,4 +1,4 @@
-<div class="myTable rounded-lg">
+<div class="myTable rounded-lg" *ngIf="auth.isLoggedIn()">
   <table class="table table-hover shadow-lg rounded-lg" id="myTable">
     <thead class="thead-dark">
     <tr>
@@ -19,4 +19,7 @@
     <tbody id="myTableD">
     </tbody>
   </table>
+</div>
+<div *ngIf="!auth.isLoggedIn()">
+  not logged in!
 </div>
