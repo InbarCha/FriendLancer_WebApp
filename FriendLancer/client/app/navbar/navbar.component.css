@@ -1,7 +1,7 @@
 @import url(//db.onlinewebfonts.com/c/460e8698563db983434874f8f371a7d1?family=Museo);
 
 .jumbotron {
-  height: 40vh;
+  height: 50vh;
   position: relative;
   display: flex;
   flex-direction: column;
