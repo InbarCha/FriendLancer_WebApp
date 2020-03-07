@@ -1,5 +1,15 @@
-<div *ngIf="auth.isLoggedIn()">
-  <p>my-zone works!</p>
+<div *ngIf="auth.isLoggedIn()" [ngStyle]="{textAlign: 'center'}" id="myZone">
+  <div class="display-4"> My Email: </div>
+  <div class="details"> {{myDetails.myEmail}} <br/> <br/> </div>
+
+  <div class="display-4"> My Full Name: </div>
+  <div class="details"> {{myDetails.myFullName}} <br/> <br/> </div>
+
+  <div class="display-4"> My Profession: </div>
+  <div class="details"> {{myDetails.myProfession}} <br/> <br/> </div>
+
+  <div class="display-4"> My City: </div>
+  <div class="details"> {{myDetails.myCity}} </div>
 </div>
 <div *ngIf="!auth.isLoggedIn()">
   <br/>

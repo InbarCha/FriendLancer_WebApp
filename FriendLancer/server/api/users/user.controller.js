@@ -53,9 +53,11 @@ function findUserByEmail(req, res) {
     }
     else {
       res.json({
-        name: user.name,
+        fullName: user.fullName,
         id: user._id,
         email: user.email,
+        city: user.city,
+        profession: user.profession,
         role: user.role
       });
     }
@@ -89,7 +91,7 @@ function create(req, res) {
             role: user.role,
             email: user.email,
             city: user.city,
-            profession: user.profession
+            profession: user.profession,
           }); // let's return the user entry to the person
           // NOTE: We are not currently encrypting the user password, this is bad.
         }).catch(validationError(res)); // catch any errors
@@ -131,9 +133,11 @@ function login(req, res) {
           res.json({
             token: token,
             _id: user._id,
-            name: user.name,
+            fullName: user.fullName,
             email: user.email,
-            role: user.role
+            role: user.role,
+            city: user.city,
+            profession: user.profession,
           });
         }
       });

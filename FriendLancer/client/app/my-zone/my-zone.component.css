@@ -1,0 +1,10 @@
+@import url(//db.onlinewebfonts.com/c/460e8698563db983434874f8f371a7d1?family=Museo);
+
+#myZone {
+  margin: 20px;
+}
+
+.details {
+  font-family: Museo;
+  font-size: large;
+}
