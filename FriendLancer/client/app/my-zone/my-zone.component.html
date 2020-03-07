@@ -2,5 +2,6 @@
   <p>my-zone works!</p>
 </div>
 <div *ngIf="!auth.isLoggedIn()">
-  <p>not logged in!</p>
+  <br/>
+  <div class="display-4" [ngStyle]="{color:'red', textAlign:'center'}"> Not Logged In! </div>
 </div>

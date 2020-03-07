@@ -11,6 +11,7 @@ function handleError(res, statusCode) {
 
 
 function listAllPostsByForumId(req, res) {
+  console.log("forumId in listAllPostsByForumId is: " + req.body.forumId);
   return Post.find({forumId:req.body.forumId})
     .exec() // execute query
     .then(posts => { // if forums
@@ -36,6 +37,7 @@ function findPostById(req, res) {
     else {
       res.json({
         postTitle: post.postTitle,
+        postSubject: post.postSubject,
         postId: post.postId,
         forumId: post.forumId,
         forumName: post.forumName,
@@ -66,6 +68,7 @@ function createPost(req, res) {
         // We will be returning only a few fields that we should need.
         res.json({
           postTitle: post.postTitle,
+          postSubject: post.postSubject,
           postId: post.postId,
           forumId: post.forumId,
           forumName: post.forumName,
@@ -81,6 +84,7 @@ function editPost(req, res) {
   var query = {'postId': req.body.postId};
   req.newData = {
     postTitle: req.body.postTitle,
+    postSubject: req.body.postSubject,
     postLocation: req.body.postLocation,
     postParticipants: req.body.postParticipants,
   };

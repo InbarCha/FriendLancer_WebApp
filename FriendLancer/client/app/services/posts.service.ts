@@ -3,11 +3,12 @@ import {HttpClient} from '@angular/common/http';
 
 class Post {
   postTitle: string;
+  postSubject: string;
   postId: string;
   forumId: string;
   forumName: string;
   postLocation: string;
-  postParticipants: [string];
+  postParticipants: Array<string>;
 }
 
 @Injectable({
@@ -18,9 +19,10 @@ export class PostsService {
   constructor(private http: HttpClient) {
   }
 
-  createPost(postTitle: string, forumId: string, forumName:string, postLocation: string, postParticipants:[string]) {
+  createPost(postTitle: string, postSubject: string, forumId: string, forumName:string, postLocation: string, postParticipants:[string]) {
     return this.http.post('http://localhost:3000/api/posts', {
       postTitle: postTitle,
+      postSubject: postSubject,
       postLocation: postLocation,
       postId: this.generateId(),
       forumId: forumId,
@@ -29,10 +31,11 @@ export class PostsService {
     });
   }
 
-  editPost(postTitle: string, postId: string, forumId: string, forumName:string, postLocation: string, postParticipants:[string]) {
+  editPost(postTitle: string, postSubject: string, postId: string, forumId: string, forumName:string, postLocation: string, postParticipants:[string]) {
     return this.http.post('http://localhost:3000/api/posts/' + postId, {
       postId: postId,
       postTitle: postTitle,
+      postSubject: postSubject,
       forumId: forumId,
       forumName: forumName,
       postLocation: postLocation,
@@ -41,7 +44,9 @@ export class PostsService {
   }
 
   getAllPostsByForumId(forumId: string) {
-    return this.http.get<Post[]>('http://localhost:3000/api/posts/forumId/' + forumId);
+    return this.http.post<Post[]>('http://localhost:3000/api/posts/forums', {
+      forumId: forumId
+    });
   }
 
   getPostById(postId: string) {
@@ -51,4 +56,17 @@ export class PostsService {
   generateId() {
     return '_' + Math.random().toString(36).substr(2, 9);
   }
+
+  setActivePost(post: Post) {
+    localStorage.setItem('currentPost', JSON.stringify(post));
+  }
+
+  deactivatePost() {
+    localStorage['currentPost'] = '';
+  }
+
+  getActivePost() {
+    return JSON.parse(localStorage['currentPost']);
+  }
 }
+

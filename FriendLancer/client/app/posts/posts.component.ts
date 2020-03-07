@@ -26,29 +26,49 @@ export class PostsComponent implements OnInit {
       this.isCurrentForumExists = false;
       this.router.navigate(['/forums']);
     }
-    var forumId = JSON.parse(localStorage['currentForum'])['forumId']
+    var forumId = JSON.parse(localStorage['currentForum'])['forumId'];
     this.postSer.getAllPostsByForumId(forumId).subscribe(data=> {
       data.forEach(post => {
-        this.addRow(post.postTitle, post.postId, post.forumName, post.postLocation, post.postParticipants);
+        this.addRow(post.postTitle, post.postSubject, post.postId, post.forumName, post.postLocation, post.postParticipants);
         var currentRow = this.numOfRows;
         var router = this.router;
+        var postSer = this.postSer;
+        var turnStringToArray = this.turnStringToArray;
         document.getElementById('editBtn_' + currentRow).addEventListener('click', function() {
           var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myPostsTable");
           var rows = table.rows;
-          var postTitle = rows[currentRow].cells[1].innerText;
+
+          var postTitle = rows[currentRow].cells[0].innerText;
           console.log(postTitle);
+
+          var postSubject = rows[currentRow].cells[1].innerText;
+          console.log(postSubject);
+
           var postId = rows[currentRow].cells[2].innerText;
           console.log(postId);
+
           var forumName = rows[currentRow].cells[3].innerText;
           console.log(forumName);
+
           var postLocation = rows[currentRow].cells[4].innerText;
           console.log(postLocation);
-          var postParticipants = rows[currentRow].cells[5].innerText;
+
+          var postParticipantsAsString = rows[currentRow].cells[5].innerText;
+          var postParticipants = turnStringToArray(postParticipantsAsString);
           console.log(postParticipants);
 
+          var activePost = {
+            postTitle: postTitle,
+            postSubject: postSubject,
+            postId: postId,
+            forumName:forumName,
+            forumId: forumId,
+            postLocation:postLocation,
+            postParticipants: postParticipants
+          };
 
-          console.log(JSON.stringify({postTitle: postTitle, postId: postId, forumName:forumName, postLocation:postLocation, postParticipants:postParticipants}));
-          localStorage.setItem('currentPost', JSON.stringify({postTitle: postTitle, postId: postId, forumName:forumName, postLocation:postLocation, postParticipants:postParticipants}));
+          console.log(activePost);
+          postSer.setActivePost(activePost);
           router.navigate(['/posts/update']);
         });
         this.numOfRows += 1;
@@ -56,7 +76,12 @@ export class PostsComponent implements OnInit {
     });
   }
 
-  addRow(postTitle, postId, forumName, postLocation, postParticipants) {
+  turnStringToArray(postParticipantsAsString:string) {
+    var array:Array<string> = [];
+    return array;
+  }
+
+  addRow(postTitle, postSubject, postId, forumName, postLocation, postParticipants) {
     var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myPostsTable");
     var newRow = table.insertRow(this.numOfRows);
 
@@ -66,16 +91,18 @@ export class PostsComponent implements OnInit {
     var newCell_3 = newRow.insertCell(3);
     var newCell_4 = newRow.insertCell(4);
     var newCell_5 = newRow.insertCell(5);
+    var newCell_6 = newRow.insertCell(6);
 
     newCell_0.innerText = postTitle;
-    newCell_1.innerText = postId;
-    newCell_2.innerText = forumName;
-    newCell_3.innerText = postLocation;
-    newCell_4.innerText = postParticipants;
+    newCell_1.innerText = postSubject;
+    newCell_2.innerText = postId;
+    newCell_3.innerText = forumName;
+    newCell_4.innerText = postLocation;
+    newCell_5.innerText = postParticipants;
 
     var btnId = 'editBtn_' + this.numOfRows;
     var newCell_innerHtml = "<button class='btn btn-primary editBtns' id=" + btnId + "> Edit Post </button>"
-    newCell_5.innerHTML = newCell_innerHtml;
+    newCell_6.innerHTML = newCell_innerHtml;
   }
 
 }

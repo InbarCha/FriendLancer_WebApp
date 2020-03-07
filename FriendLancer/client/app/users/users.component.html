@@ -21,5 +21,6 @@
   </table>
 </div>
 <div *ngIf="!auth.isLoggedIn()">
-  not logged in!
+  <br/>
+  <div class="display-4" [ngStyle]="{color:'red', textAlign:'center'}"> Not Logged In! </div>
 </div>

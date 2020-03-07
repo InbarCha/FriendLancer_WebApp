@@ -22,11 +22,11 @@ router.post('/', controller.createPost);
 router.get('/:id', controller.findPostById);
 
 /**
- * path: /api/posts/:id     ->   example: http://localhost:3000/api/posts/{postId}
+ * path: /api/posts/:id     ->   example: http://localhost:3000/api/posts/{forumId}
  * method: GET
  * function: findPostById() in the posts.controller.js file
  */
-router.get('/forumId/:id', controller.listAllPostsByForumId);
+router.post('/forums', controller.listAllPostsByForumId);
 
 /**
  * path: /api/posts/:id     ->   example: http://localhost:3000/api/posts/{forumId}

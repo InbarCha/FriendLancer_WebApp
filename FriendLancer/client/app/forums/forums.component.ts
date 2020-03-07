@@ -21,6 +21,8 @@ export class ForumsComponent implements OnInit {
         var currentRow = this.numOfRows;
         var router = this.router;
         var forumSer = this.forumSer;
+
+        //adding listeners for "edit btns"
         document.getElementById('editBtn_' + currentRow).addEventListener('click', function() {
           var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myTableForums");
           var rows = table.rows;
@@ -38,6 +40,8 @@ export class ForumsComponent implements OnInit {
           forumSer.setActiveForum(activeForum);
           router.navigate(['/forums/update']);
         });
+
+        //adding listeners for "activate btns"
         document.getElementById('activateBtn_' + currentRow).addEventListener('click', function() {
           var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myTableForums");
           var rows = table.rows;

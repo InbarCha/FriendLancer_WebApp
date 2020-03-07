@@ -6,6 +6,7 @@ const Schema = mongoose.Schema; // Mongoose model is a Schema
 // User Model Definition below
 const PostsSchema = new Schema({
   postTitle: String,
+  postSubject: String,
   postId: String,
   forumId: String,
   forumName: String,

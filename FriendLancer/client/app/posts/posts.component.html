@@ -1,5 +1,6 @@
 <div class="myTable rounded-lg"  [ngStyle]="{textAlign: 'center'}" *ngIf="auth.isLoggedIn()">
-  <h2> Current Forum: {{currentForumName}} </h2>
+  <div class="display-3"> Current Forum: {{currentForumName}} </div>
+  <br/>
   <button class="btn btn-primary" id="createPostBtn" routerLink="/posts/create"> New Post </button>
   <br/><br/>
   <table class="table table-hover shadow-lg rounded-lg" id="myPostsTable">
@@ -7,6 +8,9 @@
     <tr>
       <th class="width-sm">
         Post Title
+      </th>
+      <th class="width-sm">
+        Post Subject
       </th>
       <th class="width-sm">
         Post Id
@@ -30,5 +34,6 @@
   </table>
 </div>
 <div *ngIf="!auth.isLoggedIn()">
-  not logged in!
+  <br/>
+  <div class="display-4" [ngStyle]="{color:'red', textAlign:'center'}"> Not Logged In! </div>
 </div>

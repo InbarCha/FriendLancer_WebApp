@@ -46,4 +46,8 @@ export class ForumService {
   deactivateForum() {
    localStorage['currentForum'] = '';
   }
+
+  getActiveForum() {
+    return JSON.parse(localStorage['currentForum']);
+  }
  }
