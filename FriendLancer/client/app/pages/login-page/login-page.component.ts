@@ -12,7 +12,7 @@ export class LoginPageComponent implements OnInit {
   credentials: any = {
     email: '',
     pwd: ''
-  }
+  };
   returnURL: string;
   constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute) { }
 

@@ -1,6 +1,24 @@
-<div *ngIf="auth.isLoggedIn()">
-  <p>forums works!</p>
+<div class="myTable rounded-lg"  [ngStyle]="{textAlign: 'center'}" *ngIf="auth.isLoggedIn()">
+  <button class="btn btn-primary" id="createForumBtn"> New Forum </button>
+  <br/><br/>
+  <table class="table table-hover shadow-lg rounded-lg" id="myTableForums">
+    <thead class="thead-dark">
+    <tr>
+      <th class="width-sm">
+        Full Name
+      </th>
+      <th class="width-sm">
+        Forum Id
+      </th>
+      <th class="width-sm">
+        Number Of Posts
+      </th>
+    </tr>
+    </thead>
+    <tbody id="myTableForumsD">
+    </tbody>
+  </table>
 </div>
 <div *ngIf="!auth.isLoggedIn()">
-  <p>not logged in!</p>
+  not logged in!
 </div>
