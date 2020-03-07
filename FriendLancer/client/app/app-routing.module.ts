@@ -9,6 +9,7 @@ import { ForumsComponent } from "./forums/forums.component";
 import { MyZoneComponent } from "./my-zone/my-zone.component";
 import { PostsComponent } from "./posts/posts.component";
 import { UsersComponent } from "./users/users.component";
+import { StatisticsComponent } from "./statistics/statistics.component";
 import {AuthGuard} from "./guards/auth.guard";
 
 const routes: Routes = [
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'forums', component: ForumsComponent, canActivate: [AuthGuard] },
   { path: 'posts', component: PostsComponent, canActivate: [AuthGuard] },
   { path: 'myZone', component: MyZoneComponent, canActivate: [AuthGuard] },
-  { path: 'users', component: UsersComponent, canActivate: [AuthGuard] }
+  { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
+  { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard] }
 ]
 
 @NgModule({

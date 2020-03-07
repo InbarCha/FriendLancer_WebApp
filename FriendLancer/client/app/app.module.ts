@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { PostsComponent } from './posts/posts.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { UsersComponent } from './users/users.component';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { UsersComponent } from './users/users.component';
     LoginPageComponent,
     PostsComponent,
     RegisterPageComponent,
-    UsersComponent
+    UsersComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule,
