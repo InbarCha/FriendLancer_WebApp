@@ -19,7 +19,7 @@ router.post('/', controller.createPost);
  * method: GET
  * function: findPostById() in the posts.controller.js file
  */
-router.get('/:id', controller.findPostById);
+router.post('/postId', controller.findPostById);
 
 /**
  * path: /api/posts/:id     ->   example: http://localhost:3000/api/posts/{forumId}

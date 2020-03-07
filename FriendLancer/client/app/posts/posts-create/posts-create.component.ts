@@ -17,8 +17,9 @@ export class PostsCreateComponent implements OnInit {
     forumId: '',
     forumName: '',
     postLocation: '',
-    postParticipants: []
+    postParticipants: new Array<string>(),
   };
+
   returnURL: string;
   constructor(public auth: AuthService, public forumSer: ForumService,
               public postsSer: PostsService, private router: Router, private route: ActivatedRoute) { }
@@ -27,6 +28,7 @@ export class PostsCreateComponent implements OnInit {
     this.returnURL = this.route.snapshot.queryParams['returnUrl'] || '/posts';
     this.post.forumName = this.forumSer.getActiveForum()['forumName'];
     this.post.forumId = this.forumSer.getActiveForum()['forumId'];
+    this.post.postParticipants.push(this.auth.getUserEmail());
   }
 
   createPost() {

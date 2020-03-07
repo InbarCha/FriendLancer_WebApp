@@ -8,6 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.css']
 })
+
 export class PostsComponent implements OnInit {
   numOfRows: number;
   returnURL: string;
@@ -26,6 +27,11 @@ export class PostsComponent implements OnInit {
       this.isCurrentForumExists = false;
       this.router.navigate(['/forums']);
     }
+
+    this.drawTable();
+  }
+
+  drawTable() {
     var forumId = JSON.parse(localStorage['currentForum'])['forumId'];
     this.postSer.getAllPostsByForumId(forumId).subscribe(data=> {
       data.forEach(post => {
@@ -33,7 +39,9 @@ export class PostsComponent implements OnInit {
         var currentRow = this.numOfRows;
         var router = this.router;
         var postSer = this.postSer;
-        var turnStringToArray = this.turnStringToArray;
+        var turnStringToArrayAndAddUser = this.turnStringToArrayAndAddUser;
+        var authSer = this.auth;
+
         document.getElementById('editBtn_' + currentRow).addEventListener('click', function() {
           var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myPostsTable");
           var rows = table.rows;
@@ -54,7 +62,7 @@ export class PostsComponent implements OnInit {
           console.log(postLocation);
 
           var postParticipantsAsString = rows[currentRow].cells[5].innerText;
-          var postParticipants = turnStringToArray(postParticipantsAsString);
+          var postParticipants = turnStringToArrayAndAddUser(postParticipantsAsString, "");
           console.log(postParticipants);
 
           var activePost = {
@@ -71,17 +79,46 @@ export class PostsComponent implements OnInit {
           postSer.setActivePost(activePost);
           router.navigate(['/posts/update']);
         });
+
+        document.getElementById('joinBtn_' + currentRow).addEventListener('click', function() {
+          var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myPostsTable");
+          var rows = table.rows;
+
+          var postId = rows[currentRow].cells[2].innerText;
+          console.log(postId);
+
+          var newUser = authSer.getUserEmail();
+
+          postSer.getPostById(postId).subscribe(data=> {
+            var participants: Array<string> = data.postParticipants;
+            if (participants.indexOf(newUser) === -1) {
+              data.postParticipants.push(newUser);
+              postSer.editPost(data.postTitle, data.postSubject, data.postId, data.forumId, data.forumName, data.postLocation, data.postParticipants).subscribe(data=> {
+                postSer.setActivePost(data);
+                rows[currentRow].cells[5].innerText = data.postParticipants.join("\n");
+              });
+            }
+          });
+        });
+
         this.numOfRows += 1;
       });
     });
   }
 
-  turnStringToArray(postParticipantsAsString:string) {
-    var array:Array<string> = [];
-    return array;
+  turnStringToArrayAndAddUser(postParticipantsAsString:string, newUser: string) {
+    var array = new Array<string>();
+    if (newUser === "") {
+      console.log("split: " + postParticipantsAsString.split(","));
+      return postParticipantsAsString.split(",");
+    }
+    else {
+      array = postParticipantsAsString.split(",");
+      array.push(newUser);
+    }
   }
 
-  addRow(postTitle, postSubject, postId, forumName, postLocation, postParticipants) {
+  addRow(postTitle, postSubject, postId, forumName, postLocation, postParticipants: Array<string>) {
     var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myPostsTable");
     var newRow = table.insertRow(this.numOfRows);
 
@@ -98,10 +135,12 @@ export class PostsComponent implements OnInit {
     newCell_2.innerText = postId;
     newCell_3.innerText = forumName;
     newCell_4.innerText = postLocation;
-    newCell_5.innerText = postParticipants;
+    newCell_5.innerText = postParticipants.join("\n");
 
-    var btnId = 'editBtn_' + this.numOfRows;
-    var newCell_innerHtml = "<button class='btn btn-primary editBtns' id=" + btnId + "> Edit Post </button>"
+    var editBtnId = 'editBtn_' + this.numOfRows;
+    var joinBtnId = 'joinBtn_' + this.numOfRows;
+    var newCell_innerHtml = "<button class='btn btn-primary' id=" + editBtnId + "> Edit Post </button> </br>" +
+                            "<button class='btn btn-primary' id=" + joinBtnId + "> Join Meeting! </button>";
     newCell_6.innerHTML = newCell_innerHtml;
   }
 

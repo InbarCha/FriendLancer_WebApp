@@ -19,7 +19,7 @@ export class PostsService {
   constructor(private http: HttpClient) {
   }
 
-  createPost(postTitle: string, postSubject: string, forumId: string, forumName:string, postLocation: string, postParticipants:[string]) {
+  createPost(postTitle: string, postSubject: string, forumId: string, forumName:string, postLocation: string, postParticipants:Array<string>) {
     return this.http.post('http://localhost:3000/api/posts', {
       postTitle: postTitle,
       postSubject: postSubject,
@@ -31,8 +31,8 @@ export class PostsService {
     });
   }
 
-  editPost(postTitle: string, postSubject: string, postId: string, forumId: string, forumName:string, postLocation: string, postParticipants:[string]) {
-    return this.http.post('http://localhost:3000/api/posts/' + postId, {
+  editPost(postTitle: string, postSubject: string, postId: string, forumId: string, forumName:string, postLocation: string, postParticipants:Array<string>) {
+    return this.http.post<Post>('http://localhost:3000/api/posts/' + postId, {
       postId: postId,
       postTitle: postTitle,
       postSubject: postSubject,
@@ -50,7 +50,9 @@ export class PostsService {
   }
 
   getPostById(postId: string) {
-    return this.http.get<Post>('http://localhost:3000/api/forums/' + postId)
+      return this.http.post<Post>('http://localhost:3000/api/posts/postId', {
+        postId: postId
+      });
   }
 
   generateId() {
@@ -58,6 +60,7 @@ export class PostsService {
   }
 
   setActivePost(post: Post) {
+    console.log("Setting currentPost: " + JSON.stringify(post));
     localStorage.setItem('currentPost', JSON.stringify(post));
   }
 

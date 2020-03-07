@@ -23,6 +23,7 @@ function listAllPostsByForumId(req, res) {
 
 
 function findPostById(req, res) {
+  console.log("findPostById req.body.postId: " + req.body.postId);
   // Find user by email
   Post.findOne({
     postId: req.body.postId
@@ -91,6 +92,10 @@ function editPost(req, res) {
 
   Post.findOneAndUpdate(query, req.newData, {upsert: true}, function(err, post) {
     if (err) return res.send({message: false});
+    post.postTitle = req.newData.postTitle;
+    post.postSubject = req.newData.postSubject;
+    post.postLocation = req.newData.postLocation;
+    post.postParticipants = req.newData.postParticipants;
     return res.send(post);
   });
 }
