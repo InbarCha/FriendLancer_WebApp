@@ -26,6 +26,13 @@ router.post('/', controller.createForum);
  */
 router.get('/:id', controller.findForumById);
 
+/**
+ * path: /api/forums/:id     ->   example: http://localhost:3000/api/forums/{forumId}
+ * method: POST
+ * function: editForum() in the forums.controller.js file
+ */
+router.post('/:id', controller.editForum);
+
 // We export the routes to the express app, in the routes.js file we will assign the base URL for this endpoint.
 // in this file we simply want to specify the path after the base /api/users url.
 module.exports = router;

@@ -20,12 +20,19 @@ export class ForumService {
     });
   }
 
+  editForum(forumName:string, forumId:string) {
+    return this.http.post('http://localhost:3000/api/forums/' + forumId, {
+      forumId: forumId,
+      forumName: forumName
+    });
+  }
+
   getAllForums() {
     return this.http.get<Forum[]>('http://localhost:3000/api/forums');
   }
 
   getFormById(forumId: string) {
-    return this.http.get<Forum>('http://localhost:3000/api/users/' + forumId)
+    return this.http.get<Forum>('http://localhost:3000/api/forums/' + forumId)
   }
 
   generateId() {

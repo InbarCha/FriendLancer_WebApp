@@ -65,21 +65,33 @@ function createForum(req, res) {
       res.json({ message: false});
     }
     else {
-      // Define the new user, give the constructor the req.body containing all fields
+      // Define the new forum, give the constructor the req.body containing all fields
       let newForum = new Forum(req.body);
       // Now lets save the user
-      return newForum.save().then(function (forum) { // then when the user saves
+      return newForum.save().then(function (forum) { // then when the forum saves
         // We will be returning only a few fields that we should need.
         res.json({
           forumName: forum.forumName,
           forumId: forum.forumId,
-        }); // let's return the user entry to the person
-        // NOTE: We are not currently encrypting the user password, this is bad.
+        }); // let's return the forum entry to the person
       }).catch(validationError(res)); // catch any errors
     }
   });
 }
 
+function editForum(req, res) {
+  console.log("editForum");
+  var query = {'forumId': req.body.forumId};
+  req.newData = {
+    forumName: req.body.forumName
+  };
+
+  Forum.findOneAndUpdate(query, req.newData, {upsert: true}, function(err, forum) {
+    if (err) return res.send({message: false});
+    return res.send(forum);
+  });
+}
+
 
 // Any functions we create, we want to return these functions to the express app to use.
-module.exports = { listAllForums, findForumById, createForum};
+module.exports = { listAllForums, findForumById, createForum, editForum};

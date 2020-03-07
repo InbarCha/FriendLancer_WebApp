@@ -15,6 +15,7 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
 import { UsersComponent } from './users/users.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { ForumsCreateComponent } from './forums/forums-create/forums-create.component';
+import { ForumsUpdateComponent } from './forums/forums-update/forums-update.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ForumsCreateComponent } from './forums/forums-create/forums-create.comp
     RegisterPageComponent,
     UsersComponent,
     StatisticsComponent,
-    ForumsCreateComponent
+    ForumsCreateComponent,
+    ForumsUpdateComponent
   ],
   imports: [
     BrowserModule,

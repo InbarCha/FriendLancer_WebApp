@@ -1,0 +1,17 @@
+<div class="form-container">
+  <form name="form" class="loginForm" (ngSubmit)="f.form.valid && EditForum()" #f="ngForm" novalidate>
+    <div class="form-group">
+      <h2>Edit Forum</h2>
+    </div>
+    <div class="form-group">
+      <label>Forum Name</label>
+      <input class="form-control" type="text" name="forumName" [(ngModel)]="forum.forumName" required>
+    </div>
+    <div class="form-group">
+      <label>Forum Id</label>
+      <input class="form-control" type="text" name="forumId" [(ngModel)]="forum.forumId" required disabled>
+    </div>
+    <br/>
+    <button class="btn login" type="submit">Submit</button>
+  </form>
+</div>
