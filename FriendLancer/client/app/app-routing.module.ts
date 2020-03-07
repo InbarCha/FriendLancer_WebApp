@@ -12,6 +12,8 @@ import { UsersComponent } from "./users/users.component";
 import { StatisticsComponent } from "./statistics/statistics.component";
 import { ForumsCreateComponent } from "./forums/forums-create/forums-create.component";
 import { ForumsUpdateComponent } from "./forums/forums-update/forums-update.component";
+import { PostsCreateComponent } from "./posts/posts-create/posts-create.component";
+import { PostsUpdateComponent } from "./posts/posts-update/posts-update.component";
 import {AuthGuard} from "./guards/auth.guard";
 
 const routes: Routes = [
@@ -22,6 +24,8 @@ const routes: Routes = [
   { path: 'forums/create', component: ForumsCreateComponent, canActivate: [AuthGuard] },
   { path: 'forums/update', component: ForumsUpdateComponent, canActivate: [AuthGuard] },
   { path: 'posts', component: PostsComponent, canActivate: [AuthGuard] },
+  { path: 'posts/create', component: PostsCreateComponent, canActivate: [AuthGuard] },
+  { path: 'posts/update', component: PostsUpdateComponent, canActivate: [AuthGuard] },
   { path: 'myZone', component: MyZoneComponent, canActivate: [AuthGuard] },
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
   { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard] }

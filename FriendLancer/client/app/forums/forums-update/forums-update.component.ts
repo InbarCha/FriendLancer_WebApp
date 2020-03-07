@@ -29,11 +29,13 @@ export class ForumsUpdateComponent implements OnInit {
       if (data['message'] === false) {
         // if invalid login, reset the form
         this.forum.forumName = '';
+        this.forumSer.deactivateForum();
       } else {
         // if we get here, there is no error, the return is valid
         // Let's first save the info into local storage for later use. We can parse this back
         // into an object later
-        localStorage.setItem('currentForum', JSON.stringify(data));
+        console.log("new currentForum is: " +  JSON.stringify(data));
+        this.forumSer.deactivateForum();
         // route user to the return URL
         this.router.navigateByUrl(this.returnURL);
       }

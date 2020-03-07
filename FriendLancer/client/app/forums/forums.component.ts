@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { AuthService} from "../services/auth.service";
 import { Router, ActivatedRoute } from '@angular/router';
 import { ForumService } from "../services/forum.service";
@@ -11,7 +11,7 @@ import { ForumService } from "../services/forum.service";
 export class ForumsComponent implements OnInit {
   numOfRows: number;
   returnURL: string;
-  constructor(public auth: AuthService, public forumSer: ForumService, private router: Router, private route: ActivatedRoute, private elRef:ElementRef) { }
+  constructor(public auth: AuthService, public forumSer: ForumService, private router: Router, private route: ActivatedRoute) { }
   ngOnInit(): void {
     this.numOfRows = 1;
     this.returnURL = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -20,6 +20,7 @@ export class ForumsComponent implements OnInit {
         this.addRow(forum.forumName, forum.forumId, 0);
         var currentRow = this.numOfRows;
         var router = this.router;
+        var forumSer = this.forumSer;
         document.getElementById('editBtn_' + currentRow).addEventListener('click', function() {
           var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myTableForums");
           var rows = table.rows;
@@ -28,9 +29,31 @@ export class ForumsComponent implements OnInit {
           var forumName = rows[currentRow].cells[0].innerText;
           console.log(forumName);
 
-          console.log(JSON.stringify({forumName: forumName, forumId: forumId}));
-          localStorage.setItem('currentForum', JSON.stringify({forumName: forumName, forumId: forumId}));
+          var activeForum = {
+          forumName: forumName,
+            forumId: forumId
+          };
+
+          console.log(JSON.stringify(activeForum));
+          forumSer.setActiveForum(activeForum);
           router.navigate(['/forums/update']);
+        });
+        document.getElementById('activateBtn_' + currentRow).addEventListener('click', function() {
+          var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myTableForums");
+          var rows = table.rows;
+          var forumId = rows[currentRow].cells[1].innerText;
+          console.log(forumId);
+          var forumName = rows[currentRow].cells[0].innerText;
+          console.log(forumName);
+
+          var activeForum = {
+            forumName: forumName,
+            forumId: forumId
+          };
+
+          console.log(JSON.stringify(activeForum));
+          forumSer.setActiveForum(activeForum);
+          router.navigate(['/posts']);
         });
         this.numOfRows += 1;
       });
@@ -50,8 +73,10 @@ export class ForumsComponent implements OnInit {
     newCell_1.innerText = forumId;
     newCell_2.innerText = numberOfPosts;
 
-    var btnId = 'editBtn_' + this.numOfRows;
-    var newCell_innerHtml = "<button class='btn btn-primary editBtns' id=" + btnId + "> Edit Forum </button>"
+    var editBtnId = 'editBtn_' + this.numOfRows;
+    var activateBtnId = 'activateBtn_' + this.numOfRows;
+    var newCell_innerHtml = "<button class='btn btn-primary' id=" + editBtnId + "> Edit Forum </button> " +
+                            "<button class='btn btn-primary' id=" + activateBtnId + "> Go to Forum </button>"
     newCell_3.innerHTML = newCell_innerHtml;
   }
 }

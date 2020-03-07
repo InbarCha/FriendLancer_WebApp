@@ -83,12 +83,13 @@ function editForum(req, res) {
   console.log("editForum");
   var query = {'forumId': req.body.forumId};
   req.newData = {
-    forumName: req.body.forumName
+    forumName: req.body.forumName,
+    forumId: req.body.forumId
   };
 
   Forum.findOneAndUpdate(query, req.newData, {upsert: true}, function(err, forum) {
     if (err) return res.send({message: false});
-    return res.send(forum);
+    return res.send(req.newData);
   });
 }
 
