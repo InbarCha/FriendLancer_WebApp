@@ -198,9 +198,20 @@ export class PostsComponent implements OnInit {
     var editBtnId = 'editBtn_' + this.numOfRows;
     var joinBtnId = 'joinBtn_' + this.numOfRows;
     var deleteBtnId = 'deleteBtn_' + this.numOfRows;
-    var newCell_innerHtml = "<button class='btn btn-primary' id=" + editBtnId + "> Edit Post </button> </br>" +
-                            "<button class='btn btn-primary' id=" + joinBtnId + "> Join Meeting! </button>" +
-                            "<button class='btn btn-primary' id=" + deleteBtnId + "> Delete Post </button>";
+
+    var isEnabled = this.auth.isUserAdmin();
+
+    if (isEnabled) {
+      var newCell_innerHtml = "<button class='btn btn-primary' id=" + editBtnId + "> Edit Post </button> </br>" +
+        "<button class='btn btn-primary' id=" + joinBtnId + "> Join Meeting! </button>" +
+        "<button class='btn btn-primary' id=" + deleteBtnId + "> Delete Post </button>";
+    }
+    else {
+      var newCell_innerHtml = "<button class='btn btn-primary' id=" + editBtnId + "> Edit Post </button> </br>" +
+        "<button class='btn btn-primary' id=" + joinBtnId + "> Join Meeting! </button>" +
+        "<button class='btn btn-primary' id=" + deleteBtnId + " disabled> Delete Post </button>";
+    }
+
     newCell_6.innerHTML = newCell_innerHtml;
   }
 
