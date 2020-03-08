@@ -3,6 +3,7 @@ import { AuthService} from "../../services/auth.service";
 import { Router, ActivatedRoute } from '@angular/router';
 import { ForumService} from "../../services/forum.service";
 import { PostsService } from "../../services/posts.service";
+import { MeetPlaceService } from "../../services/meet-place.service";
 
 @Component({
   selector: 'app-posts-create',
@@ -21,7 +22,7 @@ export class PostsCreateComponent implements OnInit {
   };
 
   returnURL: string;
-  constructor(public auth: AuthService, public forumSer: ForumService,
+  constructor(public auth: AuthService, public forumSer: ForumService, public meetPlaceSer: MeetPlaceService,
               public postsSer: PostsService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -29,9 +30,13 @@ export class PostsCreateComponent implements OnInit {
     this.post.forumName = this.forumSer.getActiveForum()['forumName'];
     this.post.forumId = this.forumSer.getActiveForum()['forumId'];
     this.post.postParticipants.push(this.auth.getUserEmail());
+
+    this.initPostLocationSelect();
   }
 
   createPost() {
+    var select: HTMLSelectElement = <HTMLSelectElement> document.getElementById("selectPostLocation");
+    this.post.postLocation = select.options[select.selectedIndex].value;
     this.postsSer.createPost(this.post.postTitle, this.post.postSubject, this.post.forumId, this.post.forumName,
       this.post.postLocation, this.post.postParticipants).subscribe(data => {
         if (data['message'] === false) {
@@ -50,6 +55,19 @@ export class PostsCreateComponent implements OnInit {
           this.router.navigateByUrl(this.returnURL);
         }
       });
+  }
+
+  initPostLocationSelect() {
+    this.meetPlaceSer.getAllMeetPlaces().subscribe(data=> {
+      data.forEach(meetPlace => {
+        var meetPlaceName = meetPlace.meetPlaceName;
+        var meetPlaceLocation = meetPlace.meetPlaceLocation;
+        var newOption = meetPlaceName + " (" + meetPlaceLocation + ")";
+
+        var select: HTMLSelectElement = <HTMLSelectElement> document.getElementById("selectPostLocation");
+        select.options.add(new Option(newOption, newOption));
+      });
+    });
   }
 
 }

@@ -38,3 +38,7 @@ input {
   display: inline-block;
   font-size: 16px;
 }
+
+#selectPostLocation {
+  width: 350px;
+}
