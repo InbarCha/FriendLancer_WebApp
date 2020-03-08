@@ -7,6 +7,12 @@ import {AuthService} from "../services/auth.service";
   styleUrls: ['./my-zone.component.css']
 })
 export class MyZoneComponent implements OnInit {
+  myDetails:any = {
+    myEmail: this.auth.getUserEmail(),
+    myFullName: this.auth.getUserFullName(),
+    myProfession: this.auth.getUserProfession(),
+    myCity: this.auth.getUserCity()
+  };
   constructor(public auth: AuthService) { }
 
   ngOnInit(): void {

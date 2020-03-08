@@ -38,4 +38,16 @@ export class ForumService {
   generateId() {
     return '_' + Math.random().toString(36).substr(2, 9);
   }
-}
+
+  setActiveForum(forum: Forum) {
+    localStorage.setItem('currentForum', JSON.stringify(forum));
+  }
+
+  deactivateForum() {
+   localStorage['currentForum'] = '';
+  }
+
+  getActiveForum() {
+    return JSON.parse(localStorage['currentForum']);
+  }
+ }

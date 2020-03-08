@@ -1,17 +1,17 @@
 <div class="myTable rounded-lg"  [ngStyle]="{textAlign: 'center'}" *ngIf="auth.isLoggedIn()">
-  <button class="btn btn-primary" id="createForumBtn" routerLink="/forums/create"> New Forum </button>
+  <button class="btn btn-primary" id="createMeetPlaceBtn" routerLink="/meetPlaces/create"> New Meet Place </button>
   <br/><br/>
-  <table class="table table-hover shadow-lg rounded-lg" id="myTableForums">
+  <table class="table table-hover shadow-lg rounded-lg" id="myMeetPlacesTable">
     <thead class="thead-dark">
     <tr>
       <th class="width-sm">
-        Full Name
+        Meet Place Mame
       </th>
       <th class="width-sm">
-        Forum Id
+        Meet Place Type
       </th>
       <th class="width-sm">
-        Number Of Posts
+        Meet Place Location
       </th>
       <th class="width-sm">
         Actions

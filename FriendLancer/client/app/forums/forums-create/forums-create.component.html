@@ -1,4 +1,4 @@
-<div class="form-container">
+<div class="form-container" *ngIf="auth.isLoggedIn()">
   <form name="form" class="loginForm" (ngSubmit)="f.form.valid && createForum()" #f="ngForm" novalidate>
     <div class="form-group">
       <h2>New Forum</h2>
@@ -9,5 +9,11 @@
     </div>
     <br/>
     <button class="btn login" type="submit">Submit</button>
+    <br/>
+    <button class="btn login" routerLink="/forums">Cancel</button>
   </form>
+</div>
+<div *ngIf="!auth.isLoggedIn()">
+  <br/>
+  <div class="display-4" [ngStyle]="{color:'red', textAlign:'center'}"> Not Logged In! </div>
 </div>

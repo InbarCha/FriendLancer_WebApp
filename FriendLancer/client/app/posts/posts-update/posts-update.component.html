@@ -1,0 +1,26 @@
+<div class="form-container" *ngIf="auth.isLoggedIn()">
+  <form name="form" class="loginForm" (ngSubmit)="f.form.valid && EditPost()" #f="ngForm" novalidate>
+    <div class="form-group">
+      <h2>Edit Forum</h2>
+    </div>
+    <div class="form-group">
+      <label>Post Title</label>
+      <input class="form-control" type="text" name="postTitle" [(ngModel)]="post.postTitle" required>
+    </div>
+    <div class="form-group">
+      <label>Post Subject</label>
+      <textarea cols="40" rows="5" name="postSubject" required [(ngModel)]="post.postSubject"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Post Location</label>
+      <input class="form-control" type="text" name="postLocation" [(ngModel)]="post.postLocation" required>
+    </div>
+    <br/>
+    <button class="btn login" type="submit">Submit</button> <br/>
+    <button class="btn login" routerLink="/posts">Cancel</button>
+  </form>
+</div>
+<div *ngIf="!auth.isLoggedIn()">
+  <br/>
+  <div class="display-4" [ngStyle]="{color:'red', textAlign:'center'}"> Not Logged In! </div>
+</div>

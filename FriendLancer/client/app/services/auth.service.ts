@@ -48,6 +48,29 @@ export class AuthService {
     }
   }
 
+  getUserFullName() {
+    if (localStorage['currentUsr']) {
+      return JSON.parse(localStorage['currentUsr'])['fullName'];
+    } else {
+      return '';
+    }
+  }
+
+  getUserCity() {
+    if (localStorage['currentUsr']) {
+      return JSON.parse(localStorage['currentUsr'])['city'];
+    } else {
+      return '';
+    }
+  }
+  getUserProfession() {
+    if (localStorage['currentUsr']) {
+      return JSON.parse(localStorage['currentUsr'])['profession'];
+    } else {
+      return '';
+    }
+  }
+
   getAllUsers() {
     return this.http.get<Users[]>('http://localhost:3000/api/users');
   }
