@@ -31,6 +31,14 @@ function searchPost(req, res) {
     .catch(handleError(res)); // catch any errors and send them to the custom error handler function
 }
 
+function deletePost(req, res) {
+  console.log("req.body.postId: " + req.body.postId );
+  Post.remove({ postId: req.body.postId }, function(err) {
+      res.send({
+        message: true
+      });
+  });
+}
 
 function findPostById(req, res) {
   console.log("findPostById req.body.postId: " + req.body.postId);
@@ -112,4 +120,4 @@ function editPost(req, res) {
 
 
 // Any functions we create, we want to return these functions to the express app to use.
-module.exports = { listAllPostsByForumId, findPostById, createPost, editPost, searchPost};
+module.exports = { listAllPostsByForumId, findPostById, createPost, editPost, searchPost, deletePost};

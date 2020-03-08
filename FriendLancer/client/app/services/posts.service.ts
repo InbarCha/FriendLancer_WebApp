@@ -72,6 +72,12 @@ export class PostsService {
     return JSON.parse(localStorage['currentPost']);
   }
 
+  deletePost(postId: string) {
+    return this.http.post('http://localhost:3000/api/posts/postDelete', {
+      postId: postId
+    });
+  }
+
   searchPost(postTitle: string, postId: string, postLocation: string, forumName: string) {
     var query = {};
     if (postTitle != '' && postId != '' && postLocation != '') {

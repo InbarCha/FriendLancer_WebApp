@@ -22,10 +22,13 @@ export class PostsComponent implements OnInit {
   showSearchForm: boolean;
   currentForumName: string;
   errorMessage:string = '';
+  self;
 
-  constructor(public auth: AuthService, public postSer: PostsService, private router: Router, private route: ActivatedRoute) { }
+  constructor(public auth: AuthService, public postSer: PostsService, private router: Router, private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
+    this.self = this;
     this.showSearchForm = false;
     this.numOfRows = 1;
     this.returnURL = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -82,6 +85,7 @@ export class PostsComponent implements OnInit {
         var postSer = this.postSer;
         var turnStringToArrayAndAddUser = this.turnStringToArrayAndAddUser;
         var authSer = this.auth;
+        var that = this;
 
         document.getElementById('editBtn_' + currentRow).addEventListener('click', function() {
           var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myPostsTable");
@@ -142,6 +146,19 @@ export class PostsComponent implements OnInit {
           });
         });
 
+        document.getElementById('deleteBtn_' + currentRow).addEventListener('click', function() {
+          var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myPostsTable");
+          var rows = table.rows;
+
+          var postId = rows[currentRow].cells[2].innerText;
+          console.log(postId);
+
+          postSer.deletePost(postId).subscribe(data=> {
+            that.deleteTable();
+            that.drawTable();
+          });
+        });
+
         this.numOfRows += 1;
       });
     });
@@ -180,8 +197,10 @@ export class PostsComponent implements OnInit {
 
     var editBtnId = 'editBtn_' + this.numOfRows;
     var joinBtnId = 'joinBtn_' + this.numOfRows;
+    var deleteBtnId = 'deleteBtn_' + this.numOfRows;
     var newCell_innerHtml = "<button class='btn btn-primary' id=" + editBtnId + "> Edit Post </button> </br>" +
-                            "<button class='btn btn-primary' id=" + joinBtnId + "> Join Meeting! </button>";
+                            "<button class='btn btn-primary' id=" + joinBtnId + "> Join Meeting! </button>" +
+                            "<button class='btn btn-primary' id=" + deleteBtnId + "> Delete Post </button>";
     newCell_6.innerHTML = newCell_innerHtml;
   }
 
