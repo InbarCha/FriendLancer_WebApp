@@ -71,5 +71,58 @@ export class PostsService {
   getActivePost() {
     return JSON.parse(localStorage['currentPost']);
   }
+
+  searchPost(postTitle: string, postId: string, postLocation: string, forumName: string) {
+    var query = {};
+    if (postTitle != '' && postId != '' && postLocation != '') {
+      query = {
+        postId: postId,
+        postTitle: postTitle,
+        postLocation: postLocation,
+        forumName: forumName
+      }
+    }
+    else if (postTitle != '' && postId != '') {
+      query = {
+        postId: postId,
+        postTitle: postTitle,
+        forumName: forumName
+      }
+    }
+    else if (postTitle != '' && postLocation != '') {
+      query = {
+        postTitle: postTitle,
+        postLocation: postLocation,
+        forumName: forumName
+      }
+    }
+    else if (postLocation != '' && postId != '') {
+      query = {
+        postId: postId,
+        postLocation: postLocation,
+        forumName: forumName
+      }
+    }
+    else if (postLocation != '') {
+      query = {
+        postLocation: postLocation,
+        forumName: forumName
+      }
+    }
+    else if (postTitle != '') {
+      query = {
+        postTitle: postTitle,
+        forumName: forumName
+      }
+    }
+    else if (postId != '') {
+      query = {
+        postId: postId,
+        forumName: forumName
+      }
+    }
+
+    return this.http.post<Post[]>('http://localhost:3000/api/posts/postsSearch', query);
+  }
 }
 

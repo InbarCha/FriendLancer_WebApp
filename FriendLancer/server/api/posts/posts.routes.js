@@ -28,6 +28,8 @@ router.post('/postId', controller.findPostById);
  */
 router.post('/forums', controller.listAllPostsByForumId);
 
+router.post('/postsSearch', controller.searchPost);
+
 /**
  * path: /api/posts/:id     ->   example: http://localhost:3000/api/posts/{forumId}
  * method: POST

@@ -1,10 +1,38 @@
 <div class="myTable rounded-lg"  [ngStyle]="{textAlign: 'center'}" *ngIf="auth.isLoggedIn()">
   <div class="display-3"> Current Forum: {{currentForumName}} </div>
-  <br/>
+  <br/><br/>
   <button class="btn btn-primary" id="createPostBtn" routerLink="/posts/create"> New Post </button>
-  <br/>
+  <br/><br/>
   <button class="btn btn-primary" id="returnToForumsBtn" routerLink="/forums"> Back to Forums </button>
   <br/><br/>
+  <button class="btn btn-primary" id="openSearchPostBtn" (click)="showSearchFormFunc()"> Search Posts </button>
+  <br/><br/>
+  <div class="row">
+    <div class="col-sm-4 offset-sm-4">
+      <div id="searchForm" *ngIf="showSearchForm" [ngStyle]="{textAlign: 'center', width: '350px'}">
+        <form name="form" class="loginForm" (ngSubmit)="searchPost()" #f="ngForm" novalidate>
+          <div class="form-group">
+            <label>Post Title</label>
+            <input class="form-control" type="text" name="postTitle" [(ngModel)]="post.postTitle" required>
+          </div>
+          <div class="form-group">
+            <label>Post Id</label>
+            <input class="form-control" type="text" name="postId" [(ngModel)]="post.postId" required>
+          </div>
+          <div class="form-group">
+            <label>Post Location</label>
+            <input class="form-control" type="text" name="postLocation" [(ngModel)]="post.postLocation" required>
+          </div>
+          <br/>
+          <p [ngStyle]="{color: 'red'}"> {{errorMessage}}</p>
+          <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+        <button class="btn btn-primary" (click)="cancelSearch()">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <br/><br/>
+
   <table class="table table-hover shadow-lg rounded-lg" id="myPostsTable">
     <thead class="thead-dark">
     <tr>

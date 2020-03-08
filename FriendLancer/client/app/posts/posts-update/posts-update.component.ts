@@ -56,7 +56,7 @@ export class PostsUpdateComponent implements OnInit {
         var newOption = meetPlaceName + " (" + meetPlaceLocation + ")";
 
         var select: HTMLSelectElement = <HTMLSelectElement>document.getElementById("selectPostLocation");
-        select.options.add(new Option(newOption, newOption));
+        select.options.add(new Option(newOption, meetPlaceName));
       });
     });
   }

@@ -10,24 +10,65 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 
 export class PostsComponent implements OnInit {
+  post: any = {
+    postId: '',
+    postTitle: '',
+    postLocation: '',
+    forumName: '',
+  };
   numOfRows: number;
   returnURL: string;
   isCurrentForumExists: boolean;
+  showSearchForm: boolean;
   currentForumName: string;
+  errorMessage:string = '';
+
   constructor(public auth: AuthService, public postSer: PostsService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.showSearchForm = false;
     this.numOfRows = 1;
     this.returnURL = this.route.snapshot.queryParams['returnUrl'] || '/';
     if (localStorage['currentForum']) {
       this.isCurrentForumExists = true;
-      this.currentForumName = JSON.parse(localStorage['currentForum'])['forumName']
+      var forumName = JSON.parse(localStorage['currentForum'])['forumName'];
+      this.currentForumName = forumName;
+      this.post.forumName = forumName;
     }
     else {
       this.isCurrentForumExists = false;
       this.router.navigate(['/forums']);
     }
 
+    this.drawTable();
+  }
+
+  searchPost() {
+    if (this.post.postTitle === '' && this.post.postId === '' && this.post.postLocation === '') {
+      this.errorMessage = "All Rows are Empty"!
+    }
+    else {
+      this.postSer.searchPost(this.post.postTitle, this.post.postId, this.post.postLocation, this.post.forumName).subscribe(data=>{
+        this.deleteTable();
+        this.errorMessage = '';
+        data.forEach(post=> {
+          this.addRow(post.postTitle, post.postSubject, post.postId, post.forumName, post.postLocation, post.postParticipants);
+        });
+      });
+    }
+  }
+
+  showSearchFormFunc() {
+    this.showSearchForm = !this.showSearchForm;
+    if (this.showSearchForm === false) {
+      this.errorMessage = "";
+    }
+  }
+
+  cancelSearch() {
+    this.showSearchForm = false;
+    this.errorMessage = "";
+    this.deleteTable();
     this.drawTable();
   }
 
@@ -144,4 +185,11 @@ export class PostsComponent implements OnInit {
     newCell_6.innerHTML = newCell_innerHtml;
   }
 
+  deleteTable() {
+    var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myPostsTable");
+    while(table.rows.length > 1) {
+      table.deleteRow(-1);
+    }
+    this.numOfRows = 1;
+  }
 }

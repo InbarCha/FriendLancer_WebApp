@@ -21,6 +21,16 @@ function listAllPostsByForumId(req, res) {
     .catch(handleError(res)); // catch any errors and send them to the custom error handler function
 }
 
+function searchPost(req, res) {
+  return Post.find(req.body)
+    .exec() // execute query
+    .then(posts => { // if forums
+      // respond to user with 200 (success) and json encode the users
+      res.status(200).json(posts);
+    })
+    .catch(handleError(res)); // catch any errors and send them to the custom error handler function
+}
+
 
 function findPostById(req, res) {
   console.log("findPostById req.body.postId: " + req.body.postId);
@@ -102,4 +112,4 @@ function editPost(req, res) {
 
 
 // Any functions we create, we want to return these functions to the express app to use.
-module.exports = { listAllPostsByForumId, findPostById, createPost, editPost};
+module.exports = { listAllPostsByForumId, findPostById, createPost, editPost, searchPost};
