@@ -48,4 +48,50 @@ export class MeetPlaceService {
   getActiveMeetPlace() {
     return JSON.parse(localStorage['currentMeetPlace']);
   }
+
+  searchMeetPlace(meetPlaceName: string, meetPlaceType: string, meetPlaceLocation: string) {
+    var query = {};
+    if (meetPlaceName != '' && meetPlaceType != '' && meetPlaceLocation != '') {
+      query = {
+        meetPlaceName: meetPlaceName,
+        meetPlaceType: meetPlaceType,
+        meetPlaceLocation: meetPlaceLocation,
+      }
+    }
+    else if (meetPlaceName != '' && meetPlaceType != '') {
+      query = {
+        meetPlaceName: meetPlaceName,
+        meetPlaceType: meetPlaceType,
+      }
+    }
+    else if (meetPlaceName != '' && meetPlaceLocation != '') {
+      query = {
+        meetPlaceName: meetPlaceName,
+        meetPlaceLocation: meetPlaceLocation,
+      }
+    }
+    else if (meetPlaceType != '' && meetPlaceLocation != '') {
+      query = {
+        meetPlaceType: meetPlaceType,
+        meetPlaceLocation: meetPlaceLocation,
+      }
+    }
+    else if (meetPlaceType != '') {
+      query = {
+        meetPlaceType: meetPlaceType,
+      }
+    }
+    else if (meetPlaceLocation != '') {
+      query = {
+        meetPlaceLocation: meetPlaceLocation,
+      }
+    }
+    else if (meetPlaceName != '') {
+      query = {
+        meetPlaceName: meetPlaceName,
+      }
+    }
+
+    return this.http.post<MeetPlace[]>('http://localhost:3000/api/meetPlaces/searchMeetPlace', query);
+  }
 }

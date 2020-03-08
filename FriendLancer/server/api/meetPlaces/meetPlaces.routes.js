@@ -20,6 +20,8 @@ router.get('/', controller.listAllMeetPlaces);
  */
 router.post('/', controller.createMeetPlace);
 
+router.post('/searchMeetPlace', controller.searchMeetPlaces);
+
 /**
  * path: /api/meetPlaces/:id     ->   example: http://localhost:3000/api/meetPlaces/{meetPlaceName}
  * method: GET

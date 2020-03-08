@@ -25,6 +25,17 @@ function listAllMeetPlaces(req, res) {
     .catch(handleError(res)); // catch any errors and send them to the custom error handler function
 }
 
+
+function searchMeetPlaces(req, res) {
+  return MeetPlace.find(req.body)
+    .exec() // execute query
+    .then(meetPlaces => { // if forums
+      // respond to user with 200 (success) and json encode the users
+      res.status(200).json(meetPlaces);
+    })
+    .catch(handleError(res)); // catch any errors and send them to the custom error handler function
+}
+
 /**
  * Find a user by a specific email, we will send a request to this function in a GET request
  * saving the email in the request.param.id field
@@ -93,4 +104,4 @@ function editMeetPlace(req, res) {
 
 
 // Any functions we create, we want to return these functions to the express app to use.
-module.exports = { listAllMeetPlaces, findMeetPlaceByName, createMeetPlace, editMeetPlace};
+module.exports = { listAllMeetPlaces, findMeetPlaceByName, createMeetPlace, editMeetPlace, searchMeetPlaces};
