@@ -11,6 +11,11 @@ class Post {
   postParticipants: Array<string>;
 }
 
+class NumOfPosts {
+  _id: string;
+  numOfPosts: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -76,6 +81,10 @@ export class PostsService {
     return this.http.post('http://localhost:3000/api/posts/postDelete', {
       postId: postId
     });
+  }
+
+  groupByForumIdAndCount() {
+    return this.http.get<NumOfPosts[]>('http://localhost:3000/api/posts/postsGroupBy');
   }
 
   searchPost(postTitle: string, postId: string, postLocation: string, forumName: string) {

@@ -32,6 +32,8 @@ router.post('/postsSearch', controller.searchPost);
 
 router.post('/postDelete', controller.deletePost);
 
+router.get('/postsGroupBy', controller.groupByForumIdAndCount);
+
 /**
  * path: /api/posts/:id     ->   example: http://localhost:3000/api/posts/{forumId}
  * method: POST

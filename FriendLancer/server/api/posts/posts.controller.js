@@ -40,6 +40,22 @@ function deletePost(req, res) {
   });
 }
 
+function groupByForumIdAndCount(req, res) {
+  const aggregatorOpts = [
+    {
+      $group :
+        {
+          _id : "$forumId",
+          numOfPosts: { $sum: 1 }
+        }
+    },
+  ];
+
+  Post.aggregate(aggregatorOpts).exec().then(posts=> {
+    res.status(200).json(posts);
+  }).catch(handleError(res))
+}
+
 function findPostById(req, res) {
   console.log("findPostById req.body.postId: " + req.body.postId);
   // Find user by email
@@ -120,4 +136,4 @@ function editPost(req, res) {
 
 
 // Any functions we create, we want to return these functions to the express app to use.
-module.exports = { listAllPostsByForumId, findPostById, createPost, editPost, searchPost, deletePost};
+module.exports = { listAllPostsByForumId, findPostById, createPost, editPost, searchPost, deletePost, groupByForumIdAndCount};

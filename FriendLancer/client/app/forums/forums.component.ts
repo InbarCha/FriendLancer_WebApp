@@ -2,66 +2,86 @@ import {Component, OnInit} from '@angular/core';
 import { AuthService} from "../services/auth.service";
 import { Router, ActivatedRoute } from '@angular/router';
 import { ForumService } from "../services/forum.service";
+import { PostsService } from "../services/posts.service";
+
+class NumOfPosts {
+  _id: string;
+  numOfPosts: number;
+}
 
 @Component({
   selector: 'app-forums',
   templateUrl: './forums.component.html',
   styleUrls: ['./forums.component.css']
 })
+
 export class ForumsComponent implements OnInit {
   numOfRows: number;
   returnURL: string;
-  constructor(public auth: AuthService, public forumSer: ForumService, private router: Router, private route: ActivatedRoute) { }
+  constructor(public auth: AuthService, public forumSer: ForumService, public postsSer: PostsService, private router: Router, private route: ActivatedRoute) { }
   ngOnInit(): void {
     this.numOfRows = 1;
     this.returnURL = this.route.snapshot.queryParams['returnUrl'] || '/';
-    this.forumSer.getAllForums().subscribe(data=> {
-      data.forEach(forum => {
-        this.addRow(forum.forumName, forum.forumId, 0);
-        var currentRow = this.numOfRows;
-        var router = this.router;
-        var forumSer = this.forumSer;
+    this.postsSer.groupByForumIdAndCount().subscribe(data=> {
+      this.forumSer.getAllForums().subscribe(forums=> {
+        forums.forEach(forum => {
+          console.log(data);
+          var numOfPosts = this.getNumOfPosts(forum.forumId, data);
+          this.addRow(forum.forumName, forum.forumId, numOfPosts);
+          var currentRow = this.numOfRows;
+          var router = this.router;
+          var forumSer = this.forumSer;
+          //adding listeners for "edit btns"
+          document.getElementById('editBtn_' + currentRow).addEventListener('click', function() {
+            var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myTableForums");
+            var rows = table.rows;
+            var forumId = rows[currentRow].cells[1].innerText;
+            console.log(forumId);
+            var forumName = rows[currentRow].cells[0].innerText;
+            console.log(forumName);
 
-        //adding listeners for "edit btns"
-        document.getElementById('editBtn_' + currentRow).addEventListener('click', function() {
-          var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myTableForums");
-          var rows = table.rows;
-          var forumId = rows[currentRow].cells[1].innerText;
-          console.log(forumId);
-          var forumName = rows[currentRow].cells[0].innerText;
-          console.log(forumName);
+            var activeForum = {
+              forumName: forumName,
+              forumId: forumId
+            };
 
-          var activeForum = {
-          forumName: forumName,
-            forumId: forumId
-          };
+            console.log(JSON.stringify(activeForum));
+            forumSer.setActiveForum(activeForum);
+            router.navigate(['/forums/update']);
+          });
 
-          console.log(JSON.stringify(activeForum));
-          forumSer.setActiveForum(activeForum);
-          router.navigate(['/forums/update']);
+          //adding listeners for "activate btns"
+          document.getElementById('activateBtn_' + currentRow).addEventListener('click', function() {
+            var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myTableForums");
+            var rows = table.rows;
+            var forumId = rows[currentRow].cells[1].innerText;
+            console.log(forumId);
+            var forumName = rows[currentRow].cells[0].innerText;
+            console.log(forumName);
+
+            var activeForum = {
+              forumName: forumName,
+              forumId: forumId
+            };
+
+            console.log(JSON.stringify(activeForum));
+            forumSer.setActiveForum(activeForum);
+            router.navigate(['/posts']);
+          });
+          this.numOfRows += 1;
         });
-
-        //adding listeners for "activate btns"
-        document.getElementById('activateBtn_' + currentRow).addEventListener('click', function() {
-          var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myTableForums");
-          var rows = table.rows;
-          var forumId = rows[currentRow].cells[1].innerText;
-          console.log(forumId);
-          var forumName = rows[currentRow].cells[0].innerText;
-          console.log(forumName);
-
-          var activeForum = {
-            forumName: forumName,
-            forumId: forumId
-          };
-
-          console.log(JSON.stringify(activeForum));
-          forumSer.setActiveForum(activeForum);
-          router.navigate(['/posts']);
-        });
-        this.numOfRows += 1;
       });
     });
+  }
+
+  getNumOfPosts(currentForumId: string, numOfPostsArr: NumOfPosts[]) {
+    for (var i = 0; i<numOfPostsArr.length; i++) {
+      if (numOfPostsArr[i]._id === currentForumId) {
+        return numOfPostsArr[i].numOfPosts;
+      }
+    }
+
+    return -1;
   }
 
   addRow(forumsName, forumId, numberOfPosts) {
