@@ -283,3 +283,8 @@ svg#clouds {
     visibility: hidden;
   }
 }
+
+
+agm-map{
+  height: 300px;
+}

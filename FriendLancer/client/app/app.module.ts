@@ -21,6 +21,7 @@ import { PostsUpdateComponent } from './posts/posts-update/posts-update.componen
 import { MeetPlaceComponent } from './meet-place/meet-place.component';
 import { MeetPlaceCreateComponent } from './meet-place/meet-place-create/meet-place-create.component';
 import { MeetPlaceUpdateComponent } from './meet-place/meet-place-update/meet-place-update.component';
+import { AgmCoreModule} from '@agm/core'
 
 @NgModule({
   declarations: [
@@ -46,7 +47,10 @@ import { MeetPlaceUpdateComponent } from './meet-place/meet-place-update/meet-pl
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAZZ9aZlzB6HrnlFffFzRGGTFJBSetevpk'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

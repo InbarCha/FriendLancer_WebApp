@@ -10,6 +10,16 @@ export class AppComponent implements OnInit  {
   showHome: boolean;
   showForums: boolean;
   showMyZone: boolean;
+
+  latitude =32.046000;
+  longitude=34.475999;
+  onChooseLocation (event)
+  {
+    this.latitude= event.coords.lat;
+    this.longitude=event.coords.lng;
+  }
+
+
   constructor() {
   }
   ngOnInit(): void {

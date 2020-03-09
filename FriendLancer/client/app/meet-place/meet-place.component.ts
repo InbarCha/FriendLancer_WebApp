@@ -4,6 +4,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MeetPlaceService } from "../services/meet-place.service";
 import {ForumService} from "../services/forum.service";
 
+
+import {AgmCoreModule} from '@agm/core';
+
+
 @Component({
   selector: 'app-meet-place',
   templateUrl: './meet-place.component.html',
