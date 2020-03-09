@@ -11,6 +11,11 @@ class Post {
   postParticipants: Array<string>;
 }
 
+class NumOfPosts {
+  _id: string;
+  numOfPosts: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -49,6 +54,11 @@ export class PostsService {
     });
   }
 
+
+  getAllPosts() {
+    return this.http.get<Post[]>('http://localhost:3000/api/posts');
+  }
+
   getPostById(postId: string) {
       return this.http.post<Post>('http://localhost:3000/api/posts/postId', {
         postId: postId
@@ -70,6 +80,69 @@ export class PostsService {
 
   getActivePost() {
     return JSON.parse(localStorage['currentPost']);
+  }
+
+  deletePost(postId: string) {
+    return this.http.post('http://localhost:3000/api/posts/postDelete', {
+      postId: postId
+    });
+  }
+
+  groupByForumIdAndCount() {
+    return this.http.get<NumOfPosts[]>('http://localhost:3000/api/posts/postsGroupBy');
+  }
+
+  searchPost(postTitle: string, postId: string, postLocation: string, forumName: string) {
+    var query = {};
+    if (postTitle != '' && postId != '' && postLocation != '') {
+      query = {
+        postId: postId,
+        postTitle: postTitle,
+        postLocation: postLocation,
+        forumName: forumName
+      }
+    }
+    else if (postTitle != '' && postId != '') {
+      query = {
+        postId: postId,
+        postTitle: postTitle,
+        forumName: forumName
+      }
+    }
+    else if (postTitle != '' && postLocation != '') {
+      query = {
+        postTitle: postTitle,
+        postLocation: postLocation,
+        forumName: forumName
+      }
+    }
+    else if (postLocation != '' && postId != '') {
+      query = {
+        postId: postId,
+        postLocation: postLocation,
+        forumName: forumName
+      }
+    }
+    else if (postLocation != '') {
+      query = {
+        postLocation: postLocation,
+        forumName: forumName
+      }
+    }
+    else if (postTitle != '') {
+      query = {
+        postTitle: postTitle,
+        forumName: forumName
+      }
+    }
+    else if (postId != '') {
+      query = {
+        postId: postId,
+        forumName: forumName
+      }
+    }
+
+    return this.http.post<Post[]>('http://localhost:3000/api/posts/postsSearch', query);
   }
 }
 

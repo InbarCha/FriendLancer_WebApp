@@ -11,7 +11,6 @@ function handleError(res, statusCode) {
 
 
 function listAllPostsByForumId(req, res) {
-  console.log("forumId in listAllPostsByForumId is: " + req.body.forumId);
   return Post.find({forumId:req.body.forumId})
     .exec() // execute query
     .then(posts => { // if forums
@@ -21,6 +20,50 @@ function listAllPostsByForumId(req, res) {
     .catch(handleError(res)); // catch any errors and send them to the custom error handler function
 }
 
+function listAllPosts(req, res) {
+  return Post.find({})
+    .exec() // execute query
+    .then(posts => { // if forums
+      // respond to user with 200 (success) and json encode the users
+      res.status(200).json(posts);
+    })
+    .catch(handleError(res)); // catch any errors and send them to the custom error handler function
+}
+
+function searchPost(req, res) {
+  return Post.find(req.body)
+    .exec() // execute query
+    .then(posts => { // if forums
+      // respond to user with 200 (success) and json encode the users
+      res.status(200).json(posts);
+    })
+    .catch(handleError(res)); // catch any errors and send them to the custom error handler function
+}
+
+function deletePost(req, res) {
+  console.log("req.body.postId: " + req.body.postId );
+  Post.remove({ postId: req.body.postId }, function(err) {
+      res.send({
+        message: true
+      });
+  });
+}
+
+function groupByForumIdAndCount(req, res) {
+  const aggregatorOpts = [
+    {
+      $group :
+        {
+          _id : "$forumId",
+          numOfPosts: { $sum: 1 }
+        }
+    },
+  ];
+
+  Post.aggregate(aggregatorOpts).exec().then(posts=> {
+    res.status(200).json(posts);
+  }).catch(handleError(res))
+}
 
 function findPostById(req, res) {
   console.log("findPostById req.body.postId: " + req.body.postId);
@@ -102,4 +145,5 @@ function editPost(req, res) {
 
 
 // Any functions we create, we want to return these functions to the express app to use.
-module.exports = { listAllPostsByForumId, findPostById, createPost, editPost};
+module.exports = { listAllPostsByForumId, findPostById, createPost, editPost, searchPost,
+  listAllPosts, deletePost, groupByForumIdAndCount};

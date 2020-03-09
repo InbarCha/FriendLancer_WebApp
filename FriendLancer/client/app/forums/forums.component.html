@@ -1,5 +1,5 @@
 <div class="myTable rounded-lg"  [ngStyle]="{textAlign: 'center'}" *ngIf="auth.isLoggedIn()">
-  <button class="btn btn-primary" id="createForumBtn" routerLink="/forums/create"> New Forum </button>
+  <button class="btn btn-primary" id="createForumBtn" routerLink="/forums/create" *ngIf="auth.isUserAdmin()"> New Forum </button>
   <br/><br/>
   <table class="table table-hover shadow-lg rounded-lg" id="myTableForums">
     <thead class="thead-dark">

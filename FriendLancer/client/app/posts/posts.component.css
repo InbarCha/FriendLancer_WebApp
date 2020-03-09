@@ -5,3 +5,9 @@
   margin-left: 15vw !important;
   margin-right: 15vw !important;
 }
+
+#searchForm {
+  border: thin solid lightgrey !important;
+  margin-left: 40px;
+  padding: 20px;
+}

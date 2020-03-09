@@ -15,13 +15,25 @@ import {google} from "@agm/core/services/google-maps-types";
   styleUrls: ['./meet-place.component.css']
 })
 export class MeetPlaceComponent implements OnInit {
+  meetPlace:any = {
+    meetPlaceName: '',
+    meetPlaceType: '',
+    meetPlaceLocation: ''
+  };
   numOfRows: number;
   returnURL: string;
+  showSearchForm: boolean;
+  errorMessage:string = '';
   constructor(public auth: AuthService, public meetPlaceSer: MeetPlaceService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.showSearchForm = false;
     this.numOfRows = 1;
     this.returnURL = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.drawTable();
+  }
+
+  drawTable() {
     this.meetPlaceSer.getAllMeetPlaces().subscribe(data=> {
       data.forEach(meetPlace=> {
         this.addRow(meetPlace.meetPlaceName, meetPlace.meetPlaceType, meetPlace.meetPlaceLocation);
@@ -53,6 +65,43 @@ export class MeetPlaceComponent implements OnInit {
         this.numOfRows += 1;
       });
     });
+  }
+
+  searchMeetPlace() {
+    if (this.meetPlace.meetPlaceName === '' && this.meetPlace.meetPlaceType === '' && this.meetPlace.meetPlaceLocation === '') {
+      this.errorMessage = "All Rows are Empty"!
+    }
+    else {
+      this.meetPlaceSer.searchMeetPlace(this.meetPlace.meetPlaceName, this.meetPlace.meetPlaceType, this.meetPlace.meetPlaceLocation).subscribe(data=>{
+        this.deleteTable();
+        this.errorMessage = '';
+        data.forEach(meetPlace=> {
+          this.addRow(meetPlace.meetPlaceName, meetPlace.meetPlaceType, meetPlace.meetPlaceLocation);
+        });
+      });
+    }
+  }
+
+  showSearchFormFunc() {
+    this.showSearchForm = !this.showSearchForm;
+    if (this.showSearchForm === false) {
+      this.errorMessage = "";
+    }
+  }
+
+  cancelSearch() {
+    this.showSearchForm = false;
+    this.errorMessage = "";
+    this.deleteTable();
+    this.drawTable();
+  }
+
+  deleteTable() {
+    var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myMeetPlacesTable");
+    while(table.rows.length > 1) {
+      table.deleteRow(-1);
+    }
+    this.numOfRows = 1;
   }
 
   addRow(meetPlaceName, meetPlaceType, meetPlaceLocation) {

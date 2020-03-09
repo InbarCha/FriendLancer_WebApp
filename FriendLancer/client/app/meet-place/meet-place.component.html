@@ -1,6 +1,33 @@
 <div class="myTable rounded-lg"  [ngStyle]="{textAlign: 'center'}" *ngIf="auth.isLoggedIn()">
   <button class="btn btn-primary" id="createMeetPlaceBtn" routerLink="/meetPlaces/create"> New Meet Place </button>
   <br/><br/>
+  <button class="btn btn-primary" id="openSearchMeetPlacesBtn" (click)="showSearchFormFunc()"> Search Meet Places </button>
+  <br/><br/>
+  <div class="row">
+    <div class="col-sm-4 offset-sm-4">
+      <div id="searchForm" *ngIf="showSearchForm" [ngStyle]="{textAlign: 'center', width: '350px'}">
+        <form name="form" class="loginForm" (ngSubmit)="searchMeetPlace()" #f="ngForm" novalidate>
+          <div class="form-group">
+            <label>Meet Place Name</label>
+            <input class="form-control" type="text" name="meetPlaceName" [(ngModel)]="meetPlace.meetPlaceName" required>
+          </div>
+          <div class="form-group">
+            <label>Meet Place Type</label>
+            <input class="form-control" type="text" name="meetPlaceType" [(ngModel)]="meetPlace.meetPlaceType" required>
+          </div>
+          <div class="form-group">
+            <label>Meet Place Location</label>
+            <input class="form-control" type="text" name="meetPlaceLocation" [(ngModel)]="meetPlace.meetPlaceLocation" required>
+          </div>
+          <br/>
+          <p [ngStyle]="{color: 'red'}"> {{errorMessage}}</p>
+          <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+        <button class="btn btn-primary" (click)="cancelSearch()">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <br/><br/>
   <table class="table table-hover shadow-lg rounded-lg" id="myMeetPlacesTable">
     <thead class="thead-dark">
     <tr>

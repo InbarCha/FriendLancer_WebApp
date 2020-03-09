@@ -28,6 +28,14 @@ router.post('/postId', controller.findPostById);
  */
 router.post('/forums', controller.listAllPostsByForumId);
 
+router.post('/postsSearch', controller.searchPost);
+
+router.post('/postDelete', controller.deletePost);
+
+router.get('/postsGroupBy', controller.groupByForumIdAndCount);
+
+router.get('/', controller.listAllPosts);
+
 /**
  * path: /api/posts/:id     ->   example: http://localhost:3000/api/posts/{forumId}
  * method: POST

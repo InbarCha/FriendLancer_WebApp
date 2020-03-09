@@ -74,5 +74,11 @@ export class AuthService {
   getAllUsers() {
     return this.http.get<Users[]>('http://localhost:3000/api/users');
   }
+
+  isUserAdmin() {
+    if (this.isLoggedIn())
+      return JSON.parse(localStorage['currentUsr'])['role'] === "admin";
+    else return false;
+  }
 }
 

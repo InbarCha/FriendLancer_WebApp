@@ -6,6 +6,8 @@
   margin-right: 15vw !important;
 }
 
-agm-map{
-  height: 300px;
+#searchForm {
+  border: thin solid lightgrey !important;
+  margin-left: 40px;
+  padding: 20px;
 }

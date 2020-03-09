@@ -8,6 +8,7 @@ mongoose.Promise = require('bluebird');
 const connectMongo = require('connect-mongo');
 const session = require('express-session');
 const MongoStore = connectMongo(session);
+const socket = require('socket.io');
 
 // Import our config file so we may use the data inside
 const config = require('./server/config');
@@ -24,6 +25,13 @@ mongoose.connection.on('error', (err) => {
  * We create the app variable and initialize it to be an Express Application
  */
 const app = express();
+var myApp = require('http').createServer();
+myApp.listen(4000);
+
+var io = socket.listen(myApp);
+io.sockets.on('connection', function(client) {
+  client.emit('loggedOn', { helloMessage: 'Enjoy Our Site!'} )
+});
 
 // body parser is quite detailed so read the following article to understand how it works.
 // Understanding how Body Parser works : https://medium.com/@adamzerner/how-bodyparser-works-247897a93b90
