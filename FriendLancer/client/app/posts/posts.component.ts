@@ -144,4 +144,5 @@ export class PostsComponent implements OnInit {
     newCell_6.innerHTML = newCell_innerHtml;
   }
 
+
 }

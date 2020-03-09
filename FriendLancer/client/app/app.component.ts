@@ -6,7 +6,7 @@ import {AgmCoreModule} from '@agm/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit  {
+export class AppComponent implements OnInit {
   title = 'FriendLancer';
   showHome: boolean;
   showForums: boolean;

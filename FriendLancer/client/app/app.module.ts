@@ -21,7 +21,7 @@ import { PostsUpdateComponent } from './posts/posts-update/posts-update.componen
 import { MeetPlaceComponent } from './meet-place/meet-place.component';
 import { MeetPlaceCreateComponent } from './meet-place/meet-place-create/meet-place-create.component';
 import { MeetPlaceUpdateComponent } from './meet-place/meet-place-update/meet-place-update.component';
-import { AgmCoreModule} from '@agm/core'
+import { AgmCoreModule} from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -53,6 +53,8 @@ import { AgmCoreModule} from '@agm/core'
     })
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
 })
 export class AppModule { }
+

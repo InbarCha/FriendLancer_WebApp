@@ -6,6 +6,7 @@ import {ForumService} from "../services/forum.service";
 
 
 import {AgmCoreModule} from '@agm/core';
+import {google} from "@agm/core/services/google-maps-types";
 
 
 @Component({
@@ -82,5 +83,9 @@ export class MeetPlaceComponent implements OnInit {
     this.latitude= event.coords.lat;
     this.longitude=event.coords.lng;
   }
+
+  //__________________________________
+
+
 
 }
