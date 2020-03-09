@@ -72,4 +72,15 @@ export class MeetPlaceComponent implements OnInit {
     newCell_3.innerHTML = newCell_innerHtml;
   }
 
+
+
+  // GOOGLE MAPS
+  latitude =32.074109;
+  longitude=34.782827;
+  onChooseLocation (event)
+  {
+    this.latitude= event.coords.lat;
+    this.longitude=event.coords.lng;
+  }
+
 }

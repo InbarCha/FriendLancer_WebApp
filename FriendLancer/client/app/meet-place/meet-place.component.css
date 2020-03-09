@@ -5,3 +5,7 @@
   margin-left: 15vw !important;
   margin-right: 15vw !important;
 }
+
+agm-map{
+  height: 300px;
+}

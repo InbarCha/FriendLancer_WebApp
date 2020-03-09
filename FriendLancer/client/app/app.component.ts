@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {AgmCoreModule} from '@agm/core';
 
 @Component({
   selector: 'app-root',
@@ -11,13 +12,6 @@ export class AppComponent implements OnInit  {
   showForums: boolean;
   showMyZone: boolean;
 
-  latitude =32.046000;
-  longitude=34.475999;
-  onChooseLocation (event)
-  {
-    this.latitude= event.coords.lat;
-    this.longitude=event.coords.lng;
-  }
 
 
   constructor() {
