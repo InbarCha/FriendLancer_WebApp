@@ -11,3 +11,8 @@
   margin-left: 40px;
   padding: 20px;
 }
+
+#agmMap {
+  height: 400px !important;
+  weight: 400px !important;
+}

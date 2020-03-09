@@ -10,24 +10,68 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 
 export class PostsComponent implements OnInit {
+  post: any = {
+    postId: '',
+    postTitle: '',
+    postLocation: '',
+    forumName: '',
+  };
   numOfRows: number;
   returnURL: string;
   isCurrentForumExists: boolean;
+  showSearchForm: boolean;
   currentForumName: string;
-  constructor(public auth: AuthService, public postSer: PostsService, private router: Router, private route: ActivatedRoute) { }
+  errorMessage:string = '';
+  self;
+
+  constructor(public auth: AuthService, public postSer: PostsService, private router: Router, private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
+    this.self = this;
+    this.showSearchForm = false;
     this.numOfRows = 1;
     this.returnURL = this.route.snapshot.queryParams['returnUrl'] || '/';
     if (localStorage['currentForum']) {
       this.isCurrentForumExists = true;
-      this.currentForumName = JSON.parse(localStorage['currentForum'])['forumName']
+      var forumName = JSON.parse(localStorage['currentForum'])['forumName'];
+      this.currentForumName = forumName;
+      this.post.forumName = forumName;
     }
     else {
       this.isCurrentForumExists = false;
       this.router.navigate(['/forums']);
     }
 
+    this.drawTable();
+  }
+
+  searchPost() {
+    if (this.post.postTitle === '' && this.post.postId === '' && this.post.postLocation === '') {
+      this.errorMessage = "All Rows are Empty"!
+    }
+    else {
+      this.postSer.searchPost(this.post.postTitle, this.post.postId, this.post.postLocation, this.post.forumName).subscribe(data=>{
+        this.deleteTable();
+        this.errorMessage = '';
+        data.forEach(post=> {
+          this.addRow(post.postTitle, post.postSubject, post.postId, post.forumName, post.postLocation, post.postParticipants);
+        });
+      });
+    }
+  }
+
+  showSearchFormFunc() {
+    this.showSearchForm = !this.showSearchForm;
+    if (this.showSearchForm === false) {
+      this.errorMessage = "";
+    }
+  }
+
+  cancelSearch() {
+    this.showSearchForm = false;
+    this.errorMessage = "";
+    this.deleteTable();
     this.drawTable();
   }
 
@@ -41,6 +85,7 @@ export class PostsComponent implements OnInit {
         var postSer = this.postSer;
         var turnStringToArrayAndAddUser = this.turnStringToArrayAndAddUser;
         var authSer = this.auth;
+        var that = this;
 
         document.getElementById('editBtn_' + currentRow).addEventListener('click', function() {
           var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myPostsTable");
@@ -101,6 +146,19 @@ export class PostsComponent implements OnInit {
           });
         });
 
+        document.getElementById('deleteBtn_' + currentRow).addEventListener('click', function() {
+          var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myPostsTable");
+          var rows = table.rows;
+
+          var postId = rows[currentRow].cells[2].innerText;
+          console.log(postId);
+
+          postSer.deletePost(postId).subscribe(data=> {
+            that.deleteTable();
+            that.drawTable();
+          });
+        });
+
         this.numOfRows += 1;
       });
     });
@@ -139,10 +197,29 @@ export class PostsComponent implements OnInit {
 
     var editBtnId = 'editBtn_' + this.numOfRows;
     var joinBtnId = 'joinBtn_' + this.numOfRows;
-    var newCell_innerHtml = "<button class='btn btn-primary' id=" + editBtnId + "> Edit Post </button> </br>" +
-                            "<button class='btn btn-primary' id=" + joinBtnId + "> Join Meeting! </button>";
+    var deleteBtnId = 'deleteBtn_' + this.numOfRows;
+
+    var isEnabled = this.auth.isUserAdmin();
+
+    if (isEnabled) {
+      var newCell_innerHtml = "<button class='btn btn-primary' id=" + editBtnId + "> Edit Post </button> </br>" +
+        "<button class='btn btn-primary' id=" + joinBtnId + "> Join Meeting! </button>" +
+        "<button class='btn btn-primary' id=" + deleteBtnId + "> Delete Post </button>";
+    }
+    else {
+      var newCell_innerHtml = "<button class='btn btn-primary' id=" + editBtnId + "> Edit Post </button> </br>" +
+        "<button class='btn btn-primary' id=" + joinBtnId + "> Join Meeting! </button>" +
+        "<button class='btn btn-primary' id=" + deleteBtnId + " disabled> Delete Post </button>";
+    }
+
     newCell_6.innerHTML = newCell_innerHtml;
   }
 
-
+  deleteTable() {
+    var table: HTMLTableElement = <HTMLTableElement> document.getElementById("myPostsTable");
+    while(table.rows.length > 1) {
+      table.deleteRow(-1);
+    }
+    this.numOfRows = 1;
+  }
 }

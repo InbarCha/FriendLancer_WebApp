@@ -55,7 +55,7 @@
 </div>
 
 
-<agm-map [latitude]="latitude" [longitude]="longitude" (mapClick)="onChooseLocation($event)">
+<agm-map id="agmMap" [latitude]="latitude" [longitude]="longitude" (mapClick)="onChooseLocation($event)">
 <agm-marker [latitude]="latitude" [longitude]="longitude"> </agm-marker>
 </agm-map>
 
