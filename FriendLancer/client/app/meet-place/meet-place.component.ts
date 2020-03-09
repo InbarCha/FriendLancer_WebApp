@@ -1,13 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService} from "../services/auth.service";
 import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from "@angular/common/http";
 import { MeetPlaceService } from "../services/meet-place.service";
-import {ForumService} from "../services/forum.service";
+import { HttpParameterCodec } from "@angular/common/http";
 
+class Position {
+  latitude: number;
+  longitude: number;
+
+  constructor(latitude, longitude) {
+    this.latitude = latitude;
+    this.longitude = longitude;
+  }
+}
 
 import {AgmCoreModule} from '@agm/core';
 import {google} from "@agm/core/services/google-maps-types";
-
 
 @Component({
   selector: 'app-meet-place',
@@ -15,6 +24,8 @@ import {google} from "@agm/core/services/google-maps-types";
   styleUrls: ['./meet-place.component.css']
 })
 export class MeetPlaceComponent implements OnInit {
+  public positions = [new Position(51.017467, 10.233982)]; // static point for debug
+
   meetPlace:any = {
     meetPlaceName: '',
     meetPlaceType: '',
@@ -24,13 +35,33 @@ export class MeetPlaceComponent implements OnInit {
   returnURL: string;
   showSearchForm: boolean;
   errorMessage:string = '';
-  constructor(public auth: AuthService, public meetPlaceSer: MeetPlaceService, private router: Router, private route: ActivatedRoute) { }
+
+  constructor(public auth: AuthService, public meetPlaceSer: MeetPlaceService, private router: Router,
+               private route: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.showSearchForm = false;
     this.numOfRows = 1;
     this.returnURL = this.route.snapshot.queryParams['returnUrl'] || '/';
     this.drawTable();
+    this.getPositions();
+  }
+
+  getPositions() {
+    this.meetPlaceSer.getAllMeetPlaces().subscribe(data=> {
+      data.forEach(meetPlace=> {
+        var meetPlaceLocation = meetPlace.meetPlaceLocation;
+        console.log("meetPlaceLocation: " + meetPlaceLocation);
+        this.http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + encodeURI(meetPlaceLocation) +'&key=AIzaSyCQPe2NpmzkQ5Ox2UNUBPMVzX3ds-psSVQ').subscribe(data=>{
+          var latitude = data['results'][0]['geometry']['location']['lat'];
+          var longitude = data['results'][0]['geometry']['location']['lng'];
+          console.log("latitude is: " + latitude);
+          console.log("longitude is: " + longitude);
+          this.positions.push(new Position(latitude, longitude));
+        });
+      });
+      console.log(this.positions);
+    });
   }
 
   drawTable() {

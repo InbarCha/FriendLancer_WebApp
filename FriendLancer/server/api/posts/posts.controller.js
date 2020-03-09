@@ -2,6 +2,7 @@
 const Post = require('./posts.model');
 const jwt = require('jsonwebtoken');
 const config = require('../../config');
+const geocoder = require('geocoder');
 
 function validationError(res, statusCode) {
 }
@@ -142,7 +143,6 @@ function editPost(req, res) {
     return res.send(post);
   });
 }
-
 
 // Any functions we create, we want to return these functions to the express app to use.
 module.exports = { listAllPostsByForumId, findPostById, createPost, editPost, searchPost,

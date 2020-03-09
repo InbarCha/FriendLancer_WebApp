@@ -1,63 +1,69 @@
-<div class="myTable rounded-lg"  [ngStyle]="{textAlign: 'center'}" *ngIf="auth.isLoggedIn()">
-  <button class="btn btn-primary" id="createMeetPlaceBtn" routerLink="/meetPlaces/create"> New Meet Place </button>
-  <br/><br/>
-  <button class="btn btn-primary" id="openSearchMeetPlacesBtn" (click)="showSearchFormFunc()"> Search Meet Places </button>
-  <br/><br/>
-  <div class="row">
-    <div class="col-sm-4 offset-sm-4">
-      <div id="searchForm" *ngIf="showSearchForm" [ngStyle]="{textAlign: 'center', width: '350px'}">
-        <form name="form" class="loginForm" (ngSubmit)="searchMeetPlace()" #f="ngForm" novalidate>
-          <div class="form-group">
-            <label>Meet Place Name</label>
-            <input class="form-control" type="text" name="meetPlaceName" [(ngModel)]="meetPlace.meetPlaceName" required>
+<div class="row">
+  <div class="col-sm-9" *ngIf="auth.isLoggedIn()">
+    <div class="myTable rounded-lg"  [ngStyle]="{textAlign: 'center'}">
+      <button class="btn btn-primary" id="createMeetPlaceBtn" routerLink="/meetPlaces/create"> New Meet Place </button>
+      <br/><br/>
+      <button class="btn btn-primary" id="openSearchMeetPlacesBtn" (click)="showSearchFormFunc()"> Search Meet Places </button>
+      <br/><br/>
+      <div class="row">
+        <div class="col-sm-4 offset-sm-4">
+          <div id="searchForm" *ngIf="showSearchForm" [ngStyle]="{textAlign: 'center', width: '350px'}">
+            <form name="form" class="loginForm" (ngSubmit)="searchMeetPlace()" #f="ngForm" novalidate>
+              <div class="form-group">
+                <label>Meet Place Name</label>
+                <input class="form-control" type="text" name="meetPlaceName" [(ngModel)]="meetPlace.meetPlaceName" required>
+              </div>
+              <div class="form-group">
+                <label>Meet Place Type</label>
+                <input class="form-control" type="text" name="meetPlaceType" [(ngModel)]="meetPlace.meetPlaceType" required>
+              </div>
+              <div class="form-group">
+                <label>Meet Place Location</label>
+                <input class="form-control" type="text" name="meetPlaceLocation" [(ngModel)]="meetPlace.meetPlaceLocation" required>
+              </div>
+              <br/>
+              <p [ngStyle]="{color: 'red'}"> {{errorMessage}}</p>
+              <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+            <button class="btn btn-primary" (click)="cancelSearch()">Cancel</button>
           </div>
-          <div class="form-group">
-            <label>Meet Place Type</label>
-            <input class="form-control" type="text" name="meetPlaceType" [(ngModel)]="meetPlace.meetPlaceType" required>
-          </div>
-          <div class="form-group">
-            <label>Meet Place Location</label>
-            <input class="form-control" type="text" name="meetPlaceLocation" [(ngModel)]="meetPlace.meetPlaceLocation" required>
-          </div>
-          <br/>
-          <p [ngStyle]="{color: 'red'}"> {{errorMessage}}</p>
-          <button class="btn btn-primary" type="submit">Search</button>
-        </form>
-        <button class="btn btn-primary" (click)="cancelSearch()">Cancel</button>
+        </div>
       </div>
+      <br/><br/>
+      <table class="table table-hover shadow-lg rounded-lg" id="myMeetPlacesTable">
+        <thead class="thead-dark">
+        <tr>
+          <th class="width-sm">
+            Meet Place Mame
+          </th>
+          <th class="width-sm">
+            Meet Place Type
+          </th>
+          <th class="width-sm">
+            Meet Place Location
+          </th>
+          <th class="width-sm">
+            Actions
+          </th>
+        </tr>
+        </thead>
+        <tbody id="myTableForumsD">
+        </tbody>
+      </table>
     </div>
   </div>
-  <br/><br/>
-  <table class="table table-hover shadow-lg rounded-lg" id="myMeetPlacesTable">
-    <thead class="thead-dark">
-    <tr>
-      <th class="width-sm">
-        Meet Place Mame
-      </th>
-      <th class="width-sm">
-        Meet Place Type
-      </th>
-      <th class="width-sm">
-        Meet Place Location
-      </th>
-      <th class="width-sm">
-        Actions
-      </th>
-    </tr>
-    </thead>
-    <tbody id="myTableForumsD">
-    </tbody>
-  </table>
+  <div class="col-sm-3" *ngIf="auth.isLoggedIn()" id="mapDiv">
+    <agm-map id="agmMap" [latitude]="latitude" [longitude]="longitude" (mapClick)="onChooseLocation($event)">
+      <agm-marker *ngFor="let position of positions" [latitude]="position.latitude" [longitude]="position.longitude"> </agm-marker>
+    </agm-map>
+  </div>
 </div>
-<div *ngIf="!auth.isLoggedIn()">
+
+
+<div *ngIf="!auth.isLoggedIn()" >
   <br/>
   <div class="display-4" [ngStyle]="{color:'red', textAlign:'center'}"> Not Logged In! </div>
 </div>
-
-
-<agm-map id="agmMap" [latitude]="latitude" [longitude]="longitude" (mapClick)="onChooseLocation($event)">
-<agm-marker [latitude]="latitude" [longitude]="longitude"> </agm-marker>
-</agm-map>
 
 
 <!--a map that i created manually-->
