@@ -54,6 +54,11 @@ export class PostsService {
     });
   }
 
+
+  getAllPosts() {
+    return this.http.get<Post[]>('http://localhost:3000/api/posts');
+  }
+
   getPostById(postId: string) {
       return this.http.post<Post>('http://localhost:3000/api/posts/postId', {
         postId: postId

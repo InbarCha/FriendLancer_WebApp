@@ -21,7 +21,8 @@
     </div>
     <div class="form-group">
       <label>Post Location</label>
-      <select class="form-control" id="selectPostLocation" [(ngModel)]="post.postLocation">
+      <label *ngIf="withSuggestion" [ngStyle]="{color:'red'}"> With Suggestion! </label>
+      <select class="form-control" id="selectPostLocation" name="postLocation" [(ngModel)]="post.postLocation">
       </select>
     </div>
     <br/>

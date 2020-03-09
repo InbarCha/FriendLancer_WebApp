@@ -20,7 +20,7 @@ export class PostsCreateComponent implements OnInit {
     postLocation: '',
     postParticipants: new Array<string>(),
   };
-
+  withSuggestion: boolean;
   returnURL: string;
   constructor(public auth: AuthService, public forumSer: ForumService, public meetPlaceSer: MeetPlaceService,
               public postsSer: PostsService, private router: Router, private route: ActivatedRoute) { }
@@ -30,8 +30,44 @@ export class PostsCreateComponent implements OnInit {
     this.post.forumName = this.forumSer.getActiveForum()['forumName'];
     this.post.forumId = this.forumSer.getActiveForum()['forumId'];
     this.post.postParticipants.push(this.auth.getUserEmail());
+    this.withSuggestion = false;
 
     this.initPostLocationSelect();
+
+    this.postsSer.getAllPosts().subscribe(posts=> {
+      var currentUser = this.auth.getUserEmail();
+      var favoriteLocations = Array<string>();
+      var favoriteLocationsCountPerUser = Array<number>();
+
+      posts.forEach(post=> {
+        var postParticipants = post.postParticipants;
+        postParticipants.forEach(participant=> {
+          if (participant === currentUser) {
+            //the location already exists in favoriteLocations array
+            var index = favoriteLocations.indexOf(post.postLocation);
+            if (index >= 0) {
+              favoriteLocationsCountPerUser[index]++;
+            }
+            //the location doesn't exist in favoriteLocations array
+            else {
+              favoriteLocations.push(post.postLocation);
+              favoriteLocationsCountPerUser.push(0);
+            }
+          }
+        });
+      });
+
+      if (favoriteLocations.length > 0) {
+        var max = favoriteLocationsCountPerUser[0];
+        for(var i=0; i<favoriteLocationsCountPerUser.length; i++) {
+          if (favoriteLocationsCountPerUser[i] > max)
+            max = favoriteLocationsCountPerUser[i];
+        }
+
+        this.post.postLocation = favoriteLocations[max];
+        this.withSuggestion = true;
+      }
+    });
   }
 
   createPost() {

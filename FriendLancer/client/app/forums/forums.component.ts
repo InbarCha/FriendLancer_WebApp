@@ -81,7 +81,7 @@ export class ForumsComponent implements OnInit {
       }
     }
 
-    return -1;
+    return 0;
   }
 
   addRow(forumsName, forumId, numberOfPosts) {
