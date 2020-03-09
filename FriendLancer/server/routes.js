@@ -1,6 +1,5 @@
 const errors = require('./components/errors');
 const path = require('path');
-
 /**
  * Sets up all the routes for the Express app.
  * @param {Express} app - contains a reference to the Express App in the server.js file in the root of the project
