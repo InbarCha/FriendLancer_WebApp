@@ -34,6 +34,8 @@ router.post('/postDelete', controller.deletePost);
 
 router.get('/postsGroupBy', controller.groupByForumIdAndCount);
 
+router.get('/postsGroupByForumName', controller.groupByForumNameAndCount);
+
 router.get('/', controller.listAllPosts);
 
 /**

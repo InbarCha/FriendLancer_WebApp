@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {PostsService} from "../../services/posts.service";
+
+class NumOfPosts {
+  _id: string;
+  numOfPosts: number;
+}
 
 @Component({
   selector: 'app-pie-chart',
@@ -7,9 +13,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PieChartComponent implements OnInit {
   options: any;
-  data: any;
+  data: any = [];
+  isDataLoaded: boolean;
 
-  constructor() {
+  constructor(postSer: PostsService) {
+    this.isDataLoaded = false;
     this.options = {
       chart: {
         type: 'pieChart',
@@ -35,28 +43,30 @@ export class PieChartComponent implements OnInit {
       }
     };
 
-    this.data = [
-      {
-        key: "P60-1",
-        y: 256
-      },
-      {
-        key: "P60-2",
-        y: 445
-      },
-      {
-        key: "P40",
-        y: 225
-      },
-      {
-        key: "P73",
-        y: 127
-      },
-      {
-        key: "P71",
-        y: 128
-      }
-    ];
+    this.data = new Array<any>();
+    postSer.groupByForumNameAndCount().subscribe(data=> {
+      data.forEach(numOfPosts=> {
+        console.log(numOfPosts);
+        console.log({key: numOfPosts._id, y: numOfPosts.numOfPosts });
+        this.data.push({key: numOfPosts._id, y: numOfPosts.numOfPosts });
+      })
+
+      this.isDataLoaded = true;
+    });
+    // this.data = [
+    //   {
+    //     key: "Computer Science",
+    //     y: 3
+    //   },
+    //   {
+    //     key: "QA",
+    //     y: 4
+    //   },
+    //   {
+    //     key: "Accounting",
+    //     y: 5
+    //   },
+    // ];
   }
 
   ngOnInit(): void {

@@ -92,6 +92,10 @@ export class PostsService {
     return this.http.get<NumOfPosts[]>('http://localhost:3000/api/posts/postsGroupBy');
   }
 
+  groupByForumNameAndCount() {
+    return this.http.get<NumOfPosts[]>('http://localhost:3000/api/posts/postsGroupByForumName');
+  }
+
   searchPost(postTitle: string, postId: string, postLocation: string, forumName: string) {
     var query = {};
     if (postTitle != '' && postId != '' && postLocation != '') {
