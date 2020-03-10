@@ -91,6 +91,10 @@ export class PostsCreateComponent implements OnInit {
           this.router.navigateByUrl(this.returnURL);
         }
       });
+
+    this.postsSer.sendPostToFacebook(this.post.postTitle, this.post.postSubject, this.post.forumName, this.post.postLocation).subscribe(data=> {
+      console.log(data);
+    });
   }
 
   initPostLocationSelect() {

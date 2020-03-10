@@ -21,6 +21,9 @@ class NumOfPosts {
 })
 
 export class PostsService {
+  facebookPageAccessToken = "EAACwl16xoDsBACXRmYIcIYmmySAViHTtwaGquIYcVZC9m8Nte8pVywcwbsXCEZBB8shZCZCPFHJ6ZCsZAFlxI6rRNNCEuCc4CIerZCb7rGimS46BFqMRRbf8VADjHj2AlFo48istZAOBDaTvAcBz4f4hvqy1ZCokYax9GsrfVVpGOZAX5u5DEYDU6Y";
+  facebookPageId = "102130368083020";
+
   constructor(private http: HttpClient) {
   }
 
@@ -33,6 +36,18 @@ export class PostsService {
       forumId: forumId,
       forumName: forumName,
       postParticipants: postParticipants
+    });
+  }
+
+  sendPostToFacebook(postTitle: string, postSubject: string, forumName:string, postLocation: string) {
+    var url = "https://graph.facebook.com/" + this.facebookPageId + "/feed?access_token=" + this.facebookPageAccessToken;
+    var newPostString = "A new post has been created! | " +
+                        "Post Title: " + postTitle + " | " +
+                        "Post Subject: " + postSubject + " | "+
+                        "Forum Name: " + forumName + " | "+
+                        "Post Location: " + postLocation;
+    return this.http.post(url, {
+      message : newPostString
     });
   }
 
