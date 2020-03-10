@@ -29,13 +29,17 @@ export class AuthService {
       profession: profession
     });
   }
+
+  deleteUser(userEmail: string, password: string) {
+    this.http.post('http://localhost:3000/api/users/deleteUser', {
+      email: userEmail,
+      password: password
+    });
+    this.logout();
+  }
+
   isLoggedIn() {
-    if (localStorage['currentUsr']) {
-      // User is logged in, let's let them through
-      return true;
-    } else {
-      return false;
-    }
+    return !!localStorage['currentUsr'];
   }
   logout() {
     localStorage['currentUsr'] = '';
