@@ -18,6 +18,7 @@ import { MeetPlaceComponent } from "./meet-place/meet-place.component";
 import {MeetPlaceCreateComponent} from "./meet-place/meet-place-create/meet-place-create.component";
 import { MeetPlaceUpdateComponent} from "./meet-place/meet-place-update/meet-place-update.component";
 import {AuthGuard} from "./guards/auth.guard";
+import {D3Service} from "d3-ng2-service";
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },

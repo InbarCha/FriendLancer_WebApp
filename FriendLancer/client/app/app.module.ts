@@ -2,6 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import 'd3';
+import 'nvd3'
+import {NvD3Module} from "ng2-nvd3";
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -22,6 +25,7 @@ import { MeetPlaceComponent } from './meet-place/meet-place.component';
 import { MeetPlaceCreateComponent } from './meet-place/meet-place-create/meet-place-create.component';
 import { MeetPlaceUpdateComponent } from './meet-place/meet-place-update/meet-place-update.component';
 import { AgmCoreModule} from '@agm/core';
+import { PieChartComponent } from './statistics/pie-chart/pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -41,13 +45,15 @@ import { AgmCoreModule} from '@agm/core';
     PostsUpdateComponent,
     MeetPlaceComponent,
     MeetPlaceCreateComponent,
-    MeetPlaceUpdateComponent
+    MeetPlaceUpdateComponent,
+    PieChartComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    NvD3Module,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAZZ9aZlzB6HrnlFffFzRGGTFJBSetevpk'
     })
