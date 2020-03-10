@@ -26,6 +26,7 @@ import { MeetPlaceCreateComponent } from './meet-place/meet-place-create/meet-pl
 import { MeetPlaceUpdateComponent } from './meet-place/meet-place-update/meet-place-update.component';
 import { AgmCoreModule} from '@agm/core';
 import { PieChartComponent } from './statistics/pie-chart/pie-chart.component';
+import { DiscreteBarChartComponent } from './statistics/discrete-bar-chart/discrete-bar-chart.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { PieChartComponent } from './statistics/pie-chart/pie-chart.component';
     MeetPlaceCreateComponent,
     MeetPlaceUpdateComponent,
     PieChartComponent,
+    DiscreteBarChartComponent,
   ],
   imports: [
     BrowserModule,

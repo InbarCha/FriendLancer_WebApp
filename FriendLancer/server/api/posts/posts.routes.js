@@ -36,6 +36,8 @@ router.get('/postsGroupBy', controller.groupByForumIdAndCount);
 
 router.get('/postsGroupByForumName', controller.groupByForumNameAndCount);
 
+router.get('/postsGroupByPostLocation', controller.groupByLocationAndCount);
+
 router.get('/', controller.listAllPosts);
 
 /**

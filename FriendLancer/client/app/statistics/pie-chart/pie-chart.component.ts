@@ -49,7 +49,7 @@ export class PieChartComponent implements OnInit {
         console.log(numOfPosts);
         console.log({key: numOfPosts._id, y: numOfPosts.numOfPosts });
         this.data.push({key: numOfPosts._id, y: numOfPosts.numOfPosts });
-      })
+      });
 
       this.isDataLoaded = true;
     });
