@@ -166,7 +166,7 @@ function editPost(req, res) {
     postParticipants: req.body.postParticipants,
   };
 
-  Post.findOneAndUpdate(query, req.newData, {upsert: true}, function(err, post) {
+  Post.findOneAndUpdate(query, req.newData, {upsert: false}, function(err, post) {
     if (err) return res.send({message: false});
     post.postTitle = req.newData.postTitle;
     post.postSubject = req.newData.postSubject;
