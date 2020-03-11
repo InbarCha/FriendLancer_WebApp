@@ -87,7 +87,7 @@ function editForum(req, res) {
     forumId: req.body.forumId
   };
 
-  Forum.findOneAndUpdate(query, req.newData, {upsert: true}, function(err, forum) {
+  Forum.findOneAndUpdate(query, req.newData, {upsert: false}, function(err, forum) {
     if (err) return res.send({message: false});
     return res.send(req.newData);
   });

@@ -17,8 +17,6 @@ export class MyZoneComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-
 }
 
 

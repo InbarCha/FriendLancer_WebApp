@@ -99,9 +99,18 @@ export class ForumsComponent implements OnInit {
 
     var editBtnId = 'editBtn_' + this.numOfRows;
     var activateBtnId = 'activateBtn_' + this.numOfRows;
-    var newCell_innerHtml = "<button class='btn btn-primary' id=" + editBtnId + "> Edit Forum </button> " +
-                            "<button class='btn btn-primary' id=" + activateBtnId + "> Go to Forum </button>"
+
+    var isEnabled = this.auth.isUserAdmin();
+    if (isEnabled) {
+      var newCell_innerHtml = "<button class='btn btn-primary' id=" + editBtnId + "> Edit Forum </button> " +
+        "<button class='btn btn-primary' id=" + activateBtnId + "> Go to Forum </button>";
+    }
+    else {
+      var newCell_innerHtml = "<button class='btn btn-primary' id=" + editBtnId + "> Edit Forum </button> " +
+        "<button class='btn btn-primary' id=" + activateBtnId + " disabled> Go to Forum </button>";
+    }
     newCell_3.innerHTML = newCell_innerHtml;
+
   }
 }
 

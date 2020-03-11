@@ -1,5 +1,12 @@
 <div *ngIf="auth.isLoggedIn()">
-  <p>statistics works!</p>
+  <div class="row">
+    <div class="col-sm-6">
+      <app-pie-chart></app-pie-chart>
+    </div>
+    <div class="col-sm-6">
+      <app-discrete-bar-chart></app-discrete-bar-chart>
+    </div>
+  </div>
 </div>
 <div *ngIf="!auth.isLoggedIn()">
   <p>not logged in!</p>

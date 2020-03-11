@@ -24,7 +24,8 @@
               "client/assets"
             ],
             "styles": [
-              "client/styles.css"
+              "client/styles.css",
+              "node_modules/nvd3/build/nv.d3.css"
             ],
             "scripts": []
           },
