@@ -1,4 +1,4 @@
-<div *ngIf="auth.isLoggedIn()" [ngStyle]="{textAlign: 'center'}" id="myZone">
+<div *ngIf="auth.isLoggedIn()" [ngStyle]="{textAlign: 'center'}" id="myZone" xmlns="http://www.w3.org/1999/html">
   <div class="display-4"> My Email: </div>
   <div class="details"> {{myDetails.myEmail}} <br/> <br/> </div>
 
@@ -10,10 +10,26 @@
 
   <div class="display-4"> My City: </div>
   <div class="details"> {{myDetails.myCity}} </div>
+
+
+
+  <aside>
+    <p>Don’t take your Profile for granted.</p>
+  </aside>
+<p>Make the most of your portfolio of qualifications and credentials by posting them on your profile. However, keep your information job-related and not personal, private
+  information. With a few exceptions, most writers are private people. Thus, if you value your privacy and have no intentions of giving it up.</p>
+
+  <canvas id="myCanvas" width="200" height="100" style="border:1px solid #d3d3d3;">
+    Your browser does not support the HTML5 canvas tag.</canvas>
 </div>
+
+
 <div *ngIf="!auth.isLoggedIn()">
   <br/>
   <div class="display-4" [ngStyle]="{color:'red', textAlign:'center'}"> Not Logged In! </div>
 </div>
+
+
+
 
 
