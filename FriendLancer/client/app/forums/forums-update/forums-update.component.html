@@ -1,4 +1,4 @@
-<div class="form-container" *ngIf="auth.isLoggedIn()">
+<div class="form-container" *ngIf="auth.isLoggedIn() && auth.isUserAdmin()">
   <form name="form" class="loginForm" (ngSubmit)="f.form.valid && EditForum()" #f="ngForm" novalidate>
     <div class="form-group">
       <h2>Edit Forum</h2>
@@ -19,4 +19,8 @@
 <div *ngIf="!auth.isLoggedIn()">
   <br/>
   <div class="display-4" [ngStyle]="{color:'red', textAlign:'center'}"> Not Logged In! </div>
+</div>
+<div *ngIf="!auth.isUserAdmin()">
+  <br/>
+  <div class="display-4" [ngStyle]="{color:'red', textAlign:'center'}"> You're not an admin, can't edit forum! </div>
 </div>

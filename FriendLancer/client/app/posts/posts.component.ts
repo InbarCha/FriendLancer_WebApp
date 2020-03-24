@@ -207,7 +207,7 @@ export class PostsComponent implements OnInit {
         "<button class='btn btn-primary' id=" + deleteBtnId + "> Delete Post </button>";
     }
     else {
-      var newCell_innerHtml = "<button class='btn btn-primary' id=" + editBtnId + "> Edit Post </button> </br>" +
+      var newCell_innerHtml = "<button class='btn btn-primary' id=" + editBtnId + " disabled> Edit Post </button> </br>" +
         "<button class='btn btn-primary' id=" + joinBtnId + "> Join Meeting! </button>" +
         "<button class='btn btn-primary' id=" + deleteBtnId + " disabled> Delete Post </button>";
     }
