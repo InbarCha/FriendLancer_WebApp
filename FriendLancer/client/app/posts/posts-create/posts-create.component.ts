@@ -51,20 +51,23 @@ export class PostsCreateComponent implements OnInit {
             //the location doesn't exist in favoriteLocations array
             else {
               favoriteLocations.push(post.postLocation);
-              favoriteLocationsCountPerUser.push(0);
+              favoriteLocationsCountPerUser.push(1);
             }
           }
         });
       });
 
       if (favoriteLocations.length > 0) {
+        var index = 0;
         var max = favoriteLocationsCountPerUser[0];
         for(var i=0; i<favoriteLocationsCountPerUser.length; i++) {
-          if (favoriteLocationsCountPerUser[i] > max)
+          if (favoriteLocationsCountPerUser[i] > max) {
             max = favoriteLocationsCountPerUser[i];
+            index = i;
+          }
         }
 
-        this.post.postLocation = favoriteLocations[max];
+        this.post.postLocation = favoriteLocations[index];
         this.withSuggestion = true;
       }
     });
