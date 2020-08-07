@@ -24,7 +24,7 @@
     "@goparrot/geocoder": "^3.0.4",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
-    "class-transformer": "^0.2.3",
+    "class-transformer": "^0.3.1",
     "class-validator": "^0.11.0",
     "d3": "^5.15.0",
     "d3-ng2-service": "^2.2.0",
